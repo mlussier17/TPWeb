@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace TPWeb.Models
@@ -52,6 +54,20 @@ namespace TPWeb.Models
         {
             defaultPoster = new ImageGUIDReference(@"~/Images/Posters/", @"DefaultPoster.jpg");
         }
+
+        public Movie Clone()
+        {
+            Movie clone = new Movie();
+            clone.id = this.id;
+            clone.title = this.title;
+            clone.description = this.description;
+            clone.country = this.country;
+            clone.year = this.year;
+            clone.categorie = this.categorie;
+            clone.poster = this.poster;
+            clone.directors = this.directors;
+            return clone;
+        }
         #endregion
 
         #region TextModifiers
@@ -86,22 +102,150 @@ namespace TPWeb.Models
 
         #region Poster
 
-        public String GetAvaterURL()
+        public String GetPosterURL()
         {
             return defaultPoster.GetImageURL(poster);
         }
 
-        public void UploadPicture(HttpRequestBase request)
+        public void UploadPoster(HttpRequestBase request)
         {
             poster = defaultPoster.UpLoadImage(request, poster);
         }
 
-        public void RemovePicture()
+        public void RemovePoster()
         {
             defaultPoster.Remove(poster);
         }
 
         #endregion
 
+    }
+
+    public class Movies
+    {
+        public DateTime lastUpdate { get { return _lastUpdate; } }
+        private DateTime _lastUpdate = DateTime.Now;
+        public String filePath;
+        private List<Movie> List = new List<Movie>();
+
+        public Movies(String oFilePath)
+        {
+            filePath = oFilePath;
+            Read();
+        }
+
+        #region Read & Save
+        private void Read()
+        {
+            StreamReader sr = new StreamReader(filePath, Encoding.Unicode);
+
+            List.Clear();
+            while(!sr.EndOfStream)
+            {
+                List.Add(Movie.fromText(sr.ReadLine()));
+            }
+            sr.Close();
+            _lastUpdate = DateTime.Now;
+        }
+
+        private void Save()
+        {
+            StreamWriter sw = new StreamWriter(filePath, false, Encoding.Unicode);
+
+            foreach (Movie movie in List)
+            {
+                sw.WriteLine(movie.toText());
+            }
+            sw.Close();
+            _lastUpdate = DateTime.Now;
+        }
+        #endregion
+
+        #region List 
+        public List<Movie> ToList()
+        {
+            return List;
+        }
+        public List<Movie> CloneList()
+        {
+            List<Movie> clone = new List<Movie>();
+            foreach (Movie movie in List)
+            {
+                clone.Add(movie.Clone());
+            }
+            return clone;
+        }
+        #endregion
+
+        #region CRUD
+
+        public int Add(Movie movie)
+        {
+            int maxId = 0;
+            foreach(Movie m in List)
+            {
+                if (m.id > maxId) maxId = m.id;
+            }
+            movie.id = maxId + 1;
+            List.Add(movie);
+            Save();
+            return movie.id;
+        }
+
+        public void Delete(String id)
+        {
+            Delete(int.Parse(id));
+        }
+
+        public void Delete (int id)
+        {
+            int index = -1;
+            for (int i = 0; i < List.Count; ++i)
+            {
+                if (List[i].id == id) index = id;
+            }
+            if (index < -1)
+            {
+                List[index].RemovePoster();
+                List.RemoveAt(index);
+                Save();
+            }
+        }
+
+        public void Update(Movie movie)
+        {
+            int index = -1;
+            for (int i = 0; i < List.Count; i++)
+            {
+                if (List[i].id == movie.id)
+                    index = i;
+            }
+            if (index > -1)
+            {
+                List[index].title = movie.title;
+                List[index].country = movie.country;
+                List[index].description = movie.description;
+                List[index].year = movie.year;
+                List[index].poster = movie.poster;
+                List[index].categorie = movie.categorie;
+                List[index].directors = movie.directors;
+
+                Save();
+            }
+        }
+
+        public Movie Get(int Id)
+        {
+            for (int i = 0; i < List.Count; i++)
+            {
+                if (List[i].id == Id)
+                {
+                    return List[i];
+                }
+            }
+            return null;
+        }
+
+        #endregion
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using TPWeb.Models;
 
 namespace TPWeb
 {
@@ -16,6 +17,13 @@ namespace TPWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            HttpRuntime.Cache["Actors"] = new Actors(Server.MapPath(@"~/App_Data/Actors.txt"));
+        }
+        protected void Session_Start()
+        {
+            // Keep the reference of the ContactsView in order to allow all the controllers and views have access to it
+            // This allows all the session to have their own sorted contact list
+            Session["ActorsView"] = new ActorsView((Actors)HttpRuntime.Cache["Actors"]);
         }
     }
 }

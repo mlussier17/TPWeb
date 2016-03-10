@@ -40,3 +40,80 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+#ImageUploader {
+    display:none;
+}
+
+.UploadedImage {
+    height:215px;
+    width:215px;
+    object-fit: cover; /* cover the whole element while preserving aspect ratio */
+    object-position: center; /* Center the image within the element */
+    margin:10px;    
+    margin-left:0px;
+    border-radius:8px;
+    border:1px solid black;
+}
+
+.SmallAvatar {
+    height:42px;
+    width:42px;
+    object-fit: cover; /* cover the whole element while preserving aspect ratio */
+    object-position: center; /* Center the image within the element */
+    border-radius:3px;
+    border:1px solid black;
+}
+
+.BigAvatar {
+    height:215px;
+    width:215px;
+    object-fit: cover; /* cover the whole element while preserving aspect ratio */
+    object-position: center; /* Center the image within the element */
+    border-radius:6px;
+    border:1px solid black;
+}
+
+.CMD_Icon {
+    height:32px;
+}
+
+Small_CMD_Icon {
+
+}
+
+.main {
+    border: 1px solid black;
+    border-radius: 9px;
+    margin: 10px;
+    padding: 10px;
+}
+
+select {
+    width: 100%;
+}

@@ -248,4 +248,338 @@ namespace TPWeb.Models
 
         #endregion
     }
+    class MovieComparer : IComparer<Movie>
+    {
+        #region Sort parameters
+        private String sortField = "";
+        private bool ascending = true;
+        #endregion
+
+        #region Construction
+        public MovieComparer(String sortField, bool ascending = true)
+        {
+            this.sortField = sortField;
+            this.ascending = ascending;
+        }
+        #endregion
+
+        #region Typed comparers
+        private int IntCompare(int x, int y)
+        {
+            if (x > y) return 1;
+            if (x < y) return -1;
+            return 0;
+        }
+
+        private int DateCompare(DateTime x, DateTime y)
+        {
+            if (x > y) return 1;
+            if (x < y) return -1;
+            return 0;
+        }
+        #endregion
+
+        #region Comparer selector
+        public int Compare(Movie x, Movie y)
+        {
+            switch (sortField)
+            {
+                case "title":
+                    if (ascending)
+                        return string.Compare(x.title, y.title);
+                    else
+                        return string.Compare(y.title, x.title);
+
+                case "description":
+                    if (ascending)
+                        return string.Compare(x.description, y.description);
+                    else
+                        return string.Compare(y.description, x.description);
+
+                case "country":
+                    if (ascending)
+                        return string.Compare(x.country, y.country);
+                    else
+                        return string.Compare(y.country, x.country);
+                case "year":
+                    if (ascending)
+                        return IntCompare(x.year, y.year);
+                    else
+                        return IntCompare(y.year, x.year);
+
+                case "categorie":
+                    if (ascending)
+                        return string.Compare(x.categorie, y.categorie);
+                    else
+                        return string.Compare(y.categorie, x.categorie);
+
+                case "directors":
+                    if (ascending)
+                        return string.Compare(x.directors, y.directors);
+                    else
+                        return string.Compare(y.directors, x.directors);
+            }
+
+            return 0;
+        }
+        #endregion
+    }
+    public class MoviesView
+    {
+        private List<Movie> List = new List<Movie>();
+        private DateTime LastUpdate = new DateTime(0);
+        private bool ascending = true;
+        private String sortField = "";
+        private Movies movies = null;
+        private bool toggleSortDirection = true;
+
+        public MoviesView(Movies movies, String FieldToSort = "")
+        {
+            this.movies = movies;
+            sortField = FieldToSort;
+            UpdateList();
+        }
+
+        public List<Movie> ToList()
+        {
+            UpdateList();
+            return List;
+        }
+
+        private void UpdateList()
+        {
+            if (movies.lastUpdate > LastUpdate)
+            {
+                List.Clear();
+                List = movies.CloneList();
+                LastUpdate = movies.lastUpdate;
+                toggleSortDirection = false;
+                Sort(sortField);
+            }
+        }
+
+        public void Sort(String FieldToSort = "")
+        {
+            UpdateList();
+            if (!String.IsNullOrEmpty(FieldToSort))
+            {
+                if (sortField != FieldToSort)
+                {
+                    sortField = FieldToSort;
+                    ascending = true;
+                    toggleSortDirection = true;
+                }
+                else
+                {
+                    if (toggleSortDirection)
+                        ascending = !ascending;
+                    toggleSortDirection = true;
+                }
+                List.Sort(new MovieComparer(sortField, ascending));
+            }
+        }
+        public Movie Get(int Id)
+        {
+            for (int i = 0; i < List.Count; i++)
+            {
+                if (List[i].id == Id)
+                {
+                    return List[i];
+                }
+            }
+            return null;
+        }
+    }
+    public class Played
+    {
+        public int Id { get; set; }
+        public int MovieId { get; set; }
+        public int ActorId { get; set; }
+
+        public Played()
+        {
+            Id = 0;
+            MovieId = 0;
+            ActorId = 0;
+        }
+
+        public Played(int ContactId, int FriendId)
+        {
+            Id = 0;
+            this.MovieId = ContactId;
+            this.ActorId = FriendId;
+        }
+
+        public Played Clone()
+        {
+            Played clone = new Played();
+            clone.Id = this.Id;
+            clone.MovieId = this.MovieId;
+            clone.ActorId = this.ActorId;
+            return clone;
+        }
+
+        private const char SEPERATOR = '|';
+
+        public static Played FromStreamTextLine(String streamTextLine)
+        {
+            Played Played = new Played();
+            String[] Tokens = streamTextLine.Split(SEPERATOR);
+
+            Played.Id = int.Parse(Tokens[0]);
+            Played.MovieId = int.Parse(Tokens[1]);
+            Played.ActorId = int.Parse(Tokens[2]);
+
+            return Played;
+        }
+
+        public String ToStreamTextLine()
+        {
+            return Id.ToString() + SEPERATOR +
+                    MovieId.ToString() + SEPERATOR +
+                    ActorId.ToString() + SEPERATOR;
+        }
+    }
+
+    public class Playeds
+    {
+        public DateTime LastUpdate { get { return _LastUpdate; } }
+
+        #region Construction
+        public Playeds(String filePath)
+        {
+            FilePath = filePath;
+            Read();
+        }
+        #endregion
+
+        #region Locking handlers
+        private bool locked = false;
+
+        private void WaitForUnlocked()
+        {
+            while (locked) { /* do nothing */}
+        }
+
+        private void Lock()
+        {
+            WaitForUnlocked();
+            locked = true;
+        }
+
+        private void UnLock()
+        {
+            locked = false;
+        }
+        #endregion
+
+        #region File IO handlers
+
+        String FilePath;
+        private DateTime _LastUpdate = DateTime.Now;
+
+        private void Read()
+        {
+            WaitForUnlocked();
+            StreamReader sr = new StreamReader(FilePath, Encoding.Unicode);
+
+            List.Clear();
+            while (!sr.EndOfStream)
+            {
+                List.Add(Played.FromStreamTextLine(sr.ReadLine()));
+            }
+            sr.Close();
+            _LastUpdate = DateTime.Now;
+        }
+
+        private void Save()
+        {
+            StreamWriter sw = new StreamWriter(FilePath, false /*erase*/, Encoding.Unicode);
+
+            foreach (Played Played in List)
+            {
+                sw.WriteLine(Played.ToStreamTextLine());
+            }
+            sw.Close();
+            _LastUpdate = DateTime.Now;
+        }
+        #endregion
+
+        #region Friends list handlers
+        private List<Played> List = new List<Played>();
+
+        public List<Played> ToList()
+        {
+            WaitForUnlocked();
+            return List;
+        }
+
+        public List<Played> CloneList()
+        {
+            WaitForUnlocked();
+            List<Played> clone = new List<Played>();
+            foreach (Played Friend in List)
+            {
+                clone.Add(Friend.Clone());
+            }
+            return clone;
+        }
+        #endregion
+
+        #region CRUD queries
+        public void Add(Played Played)
+        {
+            Lock();
+            int maxId = 0;
+
+            foreach (Played p in List)
+            {
+                if (p.Id > maxId)
+                    maxId = p.Id;
+            }
+            Played.Id = maxId + 1;
+            List.Add(Played);
+            Save();
+            UnLock();
+        }
+
+        public void Delete(String id)
+        {
+            Delete(int.Parse(id));
+        }
+
+        public void Delete(int Id)
+        {
+            Lock();
+            int index = -1;
+            for (int i = 0; i < List.Count; i++)
+            {
+                if (List[i].Id == Id)
+                    index = i;
+            }
+            if (index > -1)
+            {
+                List.RemoveAt(index);
+                Save();
+            }
+            UnLock();
+        }
+
+        public Played Get(int Id)
+        {
+            Lock();
+            for (int i = 0; i < List.Count; i++)
+            {
+                if (List[i].Id == Id)
+                {
+                    UnLock();
+                    return List[i];
+                }
+            }
+            UnLock();
+            return null;
+        }
+
+        #endregion
+    }
 }

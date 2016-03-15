@@ -66,7 +66,7 @@ namespace TPWeb.Controllers
                 if (actorToEdit != null)
                 {
                     // Retreive from the Session dictionary the reference of the ContactsView instance
-                    ActorsView ContactsView = (ActorsView)Session["ContactsView"];
+                    ActorsView ActorsView = (ActorsView)Session["ActorsView"];
 
                     // Retreive from the Application dictionary the reference of the Friends instance
                     //Friends Friends = (Friends)HttpRuntime.Cache["Friends"];
@@ -119,26 +119,33 @@ namespace TPWeb.Controllers
 
         //
         // GET: /Actors/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(String id)
         {
-            return View();
+            // Make sure that this action is called with an id
+            if (!String.IsNullOrEmpty(id))
+            {
+                ((Actors)HttpRuntime.Cache["Actors"]).Delete(id);
+            }
+            // Return the Index action of this controller
+            return RedirectToAction("Index");
         }
 
-        //
-        // POST: /Actors/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpGet]
+        public ActionResult Details(String id)
         {
-            try
+            // Make sure that this action is called with an id
+            if (!String.IsNullOrEmpty(id))
             {
-                // TODO: Add delete logic here
+                Actor contactToView = ((Actors)HttpRuntime.Cache["Actors"]).Get(int.Parse(id));
+                if (contactToView != null)
+                {
+                    // Pass the reference of the contact to view to this action view
+                    return View(contactToView);
+                }
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            // Return the Index action of this controller
+            return RedirectToAction("Index");
         }
     }
 }

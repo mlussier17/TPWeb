@@ -164,6 +164,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Actors\Create.cshtml" />
     <Content Include="Views\Actors\Index.cshtml" />
+    <Content Include="Views\Actors\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

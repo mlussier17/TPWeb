@@ -123,7 +123,7 @@ namespace TPWeb.Models
             return ActorMoviesList;
         }
 
-        public List<Movie> GetNotYetActorsList(Parutions parutions, MoviesView movies)
+        public List<Movie> GetNotYetMoviesList(Parutions parutions, MoviesView movies)
         {
             List<Movie> ContactNotYetActorList = new List<Movie>();
             List<Movie> ParutionsList = GetMoviesList(parutions, movies);
@@ -147,7 +147,7 @@ namespace TPWeb.Models
             return ContactNotYetActorList;
         }
 
-        public void ClearActorList(Parutions parutions)
+        public void ClearMovieList(Parutions parutions)
         {
             bool checkForMore;
             do

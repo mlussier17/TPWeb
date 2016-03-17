@@ -93,7 +93,7 @@ $("#MoveRight").on('click', function () {
 ///////////////////////////////////////////////////////////////////
 $("#save").on('click', function (event) {
     var friends_Id_String_List = "";
-    $('#FriendsList option').each(function () {
+    $('#ParutionsList option').each(function () {
         friends_Id_String_List += this.value + ",";
     });
     $("#FriendsListItems").val(friends_Id_String_List);

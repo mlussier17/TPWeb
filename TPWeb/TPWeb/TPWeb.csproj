@@ -107,9 +107,7 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Movies\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -123,18 +121,21 @@
     <Compile Include="Models\Actors.cs" />
     <Compile Include="Models\ImageGUIDReference.cs" />
     <Compile Include="Models\Movies.cs" />
+    <Compile Include="Models\Parution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Actors.txt" />
     <Content Include="App_Data\Movies.txt" />
-    <Content Include="App_Data\Played.txt" />
+    <Content Include="App_Data\Parutions.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Icons\Moveleft.png" />
+    <Content Include="Images\Icons\MoveRight.png" />
     <Content Include="Images\Pictures\Default.png" />
     <Content Include="Images\Posters\DefaultPoster.jpg" />
     <Content Include="Scripts\bootstrap.js" />
@@ -165,6 +166,11 @@
     <Content Include="Views\Actors\Create.cshtml" />
     <Content Include="Views\Actors\Index.cshtml" />
     <Content Include="Views\Actors\Edit.cshtml" />
+    <Content Include="Views\Actors\Details.cshtml" />
+    <Content Include="Views\Movies\Create.cshtml" />
+    <Content Include="Views\Movies\Index.cshtml" />
+    <Content Include="Views\Movies\Edit.cshtml" />
+    <Content Include="Views\Movies\Details.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

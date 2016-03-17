@@ -1,0 +1,33 @@
+﻿@model TPWeb.Models.Movie
+
+<div>
+    <h4>Movie</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.title)</dt>
+        <dd>@Html.DisplayFor(model => model.title)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.description)</dt>
+        <dd>@Html.DisplayFor(model => model.description)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.country)</dt>
+        <dd>@Html.DisplayFor(model => model.country)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.year)</dt>
+        <dd>@Html.DisplayFor(model => model.year)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.categorie)</dt>
+        <dd>@Html.DisplayFor(model => model.categorie)</dd>
+
+        <dt>@Html.DisplayNameFor(model => model.poster)</dt>
+        <dd><img src="@Url.Content(Model.GetPosterURL())" class="BigAvatar" /></dd>
+
+        <dt>@Html.DisplayNameFor(model => model.directors)</dt>
+        <dd>@Html.DisplayFor(model => model.directors)</dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modifier", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Retour", "Index")
+</p>

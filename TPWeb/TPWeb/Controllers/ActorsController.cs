@@ -17,17 +17,11 @@ namespace TPWeb.Controllers
         }
 
         //
-        // GET: /Actors/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
         // GET: /Actors/Create
         public ActionResult Create()
         {
             ViewBag.Actors = ((ActorsView)Session["ActorsView"]).ToList();
+            ViewBag.Movies = ((MoviesView)Session["MoviesView"]).ToList();
 
             // Create a new instance of contact and pass it to this action view
             Actor Actor = new Actor();
@@ -42,9 +36,23 @@ namespace TPWeb.Controllers
             try
             {
                 Actors actors = (Actors)HttpRuntime.Cache["Actors"];
+                Movies movies = (Movies)HttpRuntime.Cache["Movies"];
 
                 actor.UploadPicture(Request);
-                int newContactId = actors.Add(actor);
+
+                int newMovieId = actors.Add(actor);
+
+                Parutions parutions = (Parutions)HttpRuntime.Cache["Parutions"];
+
+                String[] MoviesList = Request["MoviesList"].Split(',');
+
+                foreach(String movieId in MoviesList)
+                {
+                    if(!String.IsNullOrEmpty(movieId))
+                    {
+                        parutions.Add(new Parution(newMovieId, int.Parse(movieId)));
+                    }
+                }
 
                 return RedirectToAction("Index");
             }
@@ -136,11 +144,11 @@ namespace TPWeb.Controllers
             // Make sure that this action is called with an id
             if (!String.IsNullOrEmpty(id))
             {
-                Actor contactToView = ((Actors)HttpRuntime.Cache["Actors"]).Get(int.Parse(id));
-                if (contactToView != null)
+                Actor actorToView = ((Actors)HttpRuntime.Cache["Actors"]).Get(int.Parse(id));
+                if (actorToView != null)
                 {
                     // Pass the reference of the contact to view to this action view
-                    return View(contactToView);
+                    return View(actorToView);
                 }
             }
 

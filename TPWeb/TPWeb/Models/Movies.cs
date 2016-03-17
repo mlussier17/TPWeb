@@ -30,7 +30,7 @@ namespace TPWeb.Models
         public String country { get; set; }
 
         [Display(Name = "Année")]
-        [RegularExpression(@"^([0-9])",ErrorMessage = "Année invalide")]
+        [RegularExpression(@"^([0-9])", ErrorMessage = "Année invalide")]
         public int year { get; set; }
 
         [Display(Name = "Catégorie")]
@@ -41,7 +41,7 @@ namespace TPWeb.Models
         [Display(Name = "Affiche")]
         public String poster { get; set; }
 
-        [Display(Name = "Directeurs")]
+        [Display(Name = "Realisateur")]
         [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
         [StringLength(100), Required]
         public String directors { get; set; }
@@ -96,7 +96,7 @@ namespace TPWeb.Models
                    year + SEPARATOR +
                    categorie + SEPARATOR +
                    poster + SEPARATOR +
-                   directors+ SEPARATOR;
+                   directors + SEPARATOR;
         }
         #endregion
 
@@ -117,6 +117,65 @@ namespace TPWeb.Models
             defaultPoster.Remove(poster);
         }
 
+        #endregion
+
+        #region actors/movies
+        public List<Actor> GetActorsList(Parutions parutions, ActorsView actors)
+        {
+            List<Actor> ActorMoviesList = new List<Actor>();
+            List<Parution> ParutionsList = parutions.ToList();
+
+            foreach (Parution Parution in ParutionsList)
+            {
+                if (this.id == Parution.ActorId)
+                    ActorMoviesList.Add(actors.Get(Parution.ActorId).Clone());
+            }
+
+            return ActorMoviesList;
+        }
+
+        public List<Actor> GetNotYetActorsList(Parutions parutions, ActorsView actors)
+        {
+            List<Actor> ContactNotYetActorList = new List<Actor>();
+            List<Actor> ParutionsList = GetActorsList(parutions, actors);
+            List<Actor> ActorList = actors.ToList();
+
+            foreach (Actor Actor in ActorList)
+            {
+                bool played = false;
+                foreach (Actor actor in ActorList)
+                {
+                    if (Actor.id == actor.id)
+                    {
+                        played = true;
+                        break;
+                    }
+                }
+                if (!played)
+                    ContactNotYetActorList.Add(actors.Get(Actor.id).Clone());
+            }
+
+            return ContactNotYetActorList;
+        }
+
+        public void ClearActorList(Parutions parutions)
+        {
+            bool checkForMore;
+            do
+            {
+                List<Parution> ParutionList = parutions.ToList();
+                checkForMore = false;
+                foreach (Parution Parution in ParutionList)
+                {
+                    if (this.id == Parution.ActorId)
+                    {
+                        parutions.Delete(Parution.Id);
+                        checkForMore = true;
+                        break;
+                    }
+                }
+            } while (checkForMore);
+        }
         #endregion
 
     }
@@ -140,7 +199,7 @@ namespace TPWeb.Models
             StreamReader sr = new StreamReader(filePath, Encoding.Unicode);
 
             List.Clear();
-            while(!sr.EndOfStream)
+            while (!sr.EndOfStream)
             {
                 List.Add(Movie.fromText(sr.ReadLine()));
             }
@@ -161,7 +220,7 @@ namespace TPWeb.Models
         }
         #endregion
 
-        #region List 
+        #region List
         public List<Movie> ToList()
         {
             return List;
@@ -182,7 +241,7 @@ namespace TPWeb.Models
         public int Add(Movie movie)
         {
             int maxId = 0;
-            foreach(Movie m in List)
+            foreach (Movie m in List)
             {
                 if (m.id > maxId) maxId = m.id;
             }
@@ -197,14 +256,15 @@ namespace TPWeb.Models
             Delete(int.Parse(id));
         }
 
-        public void Delete (int id)
+        public void Delete(int Id)
         {
             int index = -1;
-            for (int i = 0; i < List.Count; ++i)
+            for (int i = 0; i < List.Count; i++)
             {
-                if (List[i].id == id) index = id;
+                if (List[i].id == Id)
+                    index = i;
             }
-            if (index < -1)
+            if (index > -1)
             {
                 List[index].RemovePoster();
                 List.RemoveAt(index);
@@ -389,197 +449,6 @@ namespace TPWeb.Models
             }
             return null;
         }
-    }
-    public class Played
-    {
-        public int Id { get; set; }
-        public int MovieId { get; set; }
-        public int ActorId { get; set; }
 
-        public Played()
-        {
-            Id = 0;
-            MovieId = 0;
-            ActorId = 0;
-        }
-
-        public Played(int ContactId, int FriendId)
-        {
-            Id = 0;
-            this.MovieId = ContactId;
-            this.ActorId = FriendId;
-        }
-
-        public Played Clone()
-        {
-            Played clone = new Played();
-            clone.Id = this.Id;
-            clone.MovieId = this.MovieId;
-            clone.ActorId = this.ActorId;
-            return clone;
-        }
-
-        private const char SEPERATOR = '|';
-
-        public static Played FromStreamTextLine(String streamTextLine)
-        {
-            Played Played = new Played();
-            String[] Tokens = streamTextLine.Split(SEPERATOR);
-
-            Played.Id = int.Parse(Tokens[0]);
-            Played.MovieId = int.Parse(Tokens[1]);
-            Played.ActorId = int.Parse(Tokens[2]);
-
-            return Played;
-        }
-
-        public String ToStreamTextLine()
-        {
-            return Id.ToString() + SEPERATOR +
-                    MovieId.ToString() + SEPERATOR +
-                    ActorId.ToString() + SEPERATOR;
-        }
-    }
-
-    public class Playeds
-    {
-        public DateTime LastUpdate { get { return _LastUpdate; } }
-
-        #region Construction
-        public Playeds(String filePath)
-        {
-            FilePath = filePath;
-            Read();
-        }
-        #endregion
-
-        #region Locking handlers
-        private bool locked = false;
-
-        private void WaitForUnlocked()
-        {
-            while (locked) { /* do nothing */}
-        }
-
-        private void Lock()
-        {
-            WaitForUnlocked();
-            locked = true;
-        }
-
-        private void UnLock()
-        {
-            locked = false;
-        }
-        #endregion
-
-        #region File IO handlers
-
-        String FilePath;
-        private DateTime _LastUpdate = DateTime.Now;
-
-        private void Read()
-        {
-            WaitForUnlocked();
-            StreamReader sr = new StreamReader(FilePath, Encoding.Unicode);
-
-            List.Clear();
-            while (!sr.EndOfStream)
-            {
-                List.Add(Played.FromStreamTextLine(sr.ReadLine()));
-            }
-            sr.Close();
-            _LastUpdate = DateTime.Now;
-        }
-
-        private void Save()
-        {
-            StreamWriter sw = new StreamWriter(FilePath, false /*erase*/, Encoding.Unicode);
-
-            foreach (Played Played in List)
-            {
-                sw.WriteLine(Played.ToStreamTextLine());
-            }
-            sw.Close();
-            _LastUpdate = DateTime.Now;
-        }
-        #endregion
-
-        #region Friends list handlers
-        private List<Played> List = new List<Played>();
-
-        public List<Played> ToList()
-        {
-            WaitForUnlocked();
-            return List;
-        }
-
-        public List<Played> CloneList()
-        {
-            WaitForUnlocked();
-            List<Played> clone = new List<Played>();
-            foreach (Played Friend in List)
-            {
-                clone.Add(Friend.Clone());
-            }
-            return clone;
-        }
-        #endregion
-
-        #region CRUD queries
-        public void Add(Played Played)
-        {
-            Lock();
-            int maxId = 0;
-
-            foreach (Played p in List)
-            {
-                if (p.Id > maxId)
-                    maxId = p.Id;
-            }
-            Played.Id = maxId + 1;
-            List.Add(Played);
-            Save();
-            UnLock();
-        }
-
-        public void Delete(String id)
-        {
-            Delete(int.Parse(id));
-        }
-
-        public void Delete(int Id)
-        {
-            Lock();
-            int index = -1;
-            for (int i = 0; i < List.Count; i++)
-            {
-                if (List[i].Id == Id)
-                    index = i;
-            }
-            if (index > -1)
-            {
-                List.RemoveAt(index);
-                Save();
-            }
-            UnLock();
-        }
-
-        public Played Get(int Id)
-        {
-            Lock();
-            for (int i = 0; i < List.Count; i++)
-            {
-                if (List[i].Id == Id)
-                {
-                    UnLock();
-                    return List[i];
-                }
-            }
-            UnLock();
-            return null;
-        }
-
-        #endregion
     }
 }

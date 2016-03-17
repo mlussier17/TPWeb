@@ -107,6 +107,66 @@ namespace TPWeb.Models
             defaultPicture.Remove(pictureId);
         }
         #endregion
+
+        #region actors/movies
+        public List<Movie> GetMoviesList(Parutions parutions, MoviesView movies)
+        {
+            List<Movie> ActorMoviesList = new List<Movie>();
+            List<Parution> ParutionsList = parutions.ToList();
+
+            foreach (Parution Parution in ParutionsList)
+            {
+                if (this.id == Parution.ActorId)
+                    ActorMoviesList.Add(movies.Get(Parution.MovieId).Clone());
+            }
+
+            return ActorMoviesList;
+        }
+
+        public List<Movie> GetNotYetActorsList(Parutions parutions, MoviesView movies)
+        {
+            List<Movie> ContactNotYetActorList = new List<Movie>();
+            List<Movie> ParutionsList = GetMoviesList(parutions, movies);
+            List<Movie> MovieList = movies.ToList();
+
+            foreach (Movie Movie in MovieList)
+            {
+                bool played = false;
+                foreach (Movie movie in MovieList)
+                {
+                    if (movie.id == movie.id)
+                    {
+                        played = true;
+                        break;
+                    }
+                }
+                if (!played)
+                    ContactNotYetActorList.Add(movies.Get(Movie.id).Clone());
+            }
+
+            return ContactNotYetActorList;
+        }
+
+        public void ClearActorList(Parutions parutions)
+        {
+            bool checkForMore;
+            do
+            {
+                List<Parution> ParutionList = parutions.ToList();
+                checkForMore = false;
+                foreach (Parution Parution in ParutionList)
+                {
+                    if (this.id == Parution.ActorId)
+                    {
+                        parutions.Delete(Parution.Id);
+                        checkForMore = true;
+                        break;
+                    }
+                }
+            } while (checkForMore);
+        }
+        #endregion
+
     }
 
     class ActorComparer : IComparer<Actor>

@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Nouveau acteur</h2>
 
 
 @using (Html.BeginForm("Create", "Actors", FormMethod.Post, new { enctype = "multipart/form-data" })) 
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Actor</h4>
+        <h4>Acteur</h4>
         <hr />
         @Html.ValidationSummary(true)
 
@@ -49,16 +49,46 @@
             </div>
         </div>
 
+        <div class="main col-md-6">
+            <h4>Liste des films</h4>
+            <hr />
+            <div class="row">
+                <div class="col-xs-5">
+                    <!--
+                    This hidden input is used to pass the selected friend Ids
+                    on the submit event of this form (refer to javascript code in utilies.js)
+                -->
+                    <input name="FriendsListItems" id="FriendsListItems" type="hidden" value="" />
+
+                    <select multiple="multiple" id="FriendsList" size="12"></select>
+                </div>
+                <div class="col-xs-2" style="text-align:center">
+                    <img src="~/Images/Icons/Moveleft.png" class="CMD_Icon pointer" id="MoveLeft" />
+                    <img src="~/Images/Icons/MoveRight.png" class="CMD_Icon pointer" id="MoveRight" />
+                </div>
+                <div class="col-xs-5">
+                    <select multiple="multiple" id="ContactsList" size="12">
+                        @foreach (TPWeb.Models.Movie Movie in ViewBag.Movies)
+                        {
+                            <option value="@Movie.id">
+                                @Movie.title
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Ajouter" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Retour", "Index")
 </div>
 
 @section Scripts {

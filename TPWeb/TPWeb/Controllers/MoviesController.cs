@@ -13,31 +13,46 @@ namespace TPWeb.Controllers
         // GET: /Movies/
         public ActionResult Index()
         {
-            return View(((ActorsView)Session["ActorsView"]).ToList());
-        }
-
-        //
-        // GET: /Movies/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+            return View(((MoviesView)Session["MoviesView"]).ToList());
         }
 
         //
         // GET: /Movies/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Movies = ((MoviesView)Session["MoviesView"]).ToList();
+            ViewBag.Actors = ((ActorsView)Session["ActorsView"]).ToList();
+
+            // Create a new instance of contact and pass it to this action view
+            Movie movie = new Movie();
+            return View(movie);
         }
 
         //
         // POST: /Movies/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Movie movie)
         {
             try
             {
-                // TODO: Add insert logic here
+                Movies movies = (Movies)HttpRuntime.Cache["Movies"];
+
+                movie.UploadPoster(Request);
+
+                int newActorId = movies.Add(movie);
+
+                Parutions parutions = (Parutions)HttpRuntime.Cache["Parutions"];
+
+                String[] ParutionsList = Request["ParutionsList"].Split(',');
+
+                foreach(String parutionId in ParutionsList)
+                {
+                    if (!String.IsNullOrEmpty(parutionId))
+                    {
+                        parutions.Add(new Parution(newActorId, int.Parse(parutionId)));
+                    }
+                }
+                int newContactId = movies.Add(movie);
 
                 return RedirectToAction("Index");
             }
@@ -49,50 +64,94 @@ namespace TPWeb.Controllers
 
         //
         // GET: /Movies/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(String id)
         {
-            return View();
+            if (!String.IsNullOrEmpty(id))
+            {
+                Movie movieToEdit = ((Movies)HttpRuntime.Cache["Movies"]).Get(int.Parse(id));
+
+                // Make sure the contact exist
+                //if (movieToEdit != null)
+                //{
+                //    // Retreive from the Session dictionary the reference of the ContactsView instance
+                //    MoviesView MoviesView = (MoviesView)Session["MoviesView"];
+
+                //    // Retreive from the Application dictionary the reference of the Friends instance
+                //    Playeds playeds = (Playeds)HttpRuntime.Cache["Playeds"];
+
+                //    // Store in ViewBag the friend list of the contact to edit
+                //    ViewBag.PlayedsList = movieToEdit.GetPlayedsList(playeds, MoviesView);
+
+                //    // Store in ViewBag the "not yet friend" contact list  of the contact to edit
+                //    ViewBag.NotYetFriendsList = contactToEdit.GetNotYetFriendsList(Friends, ContactsView);
+
+                //    // Pass the contact to edit reference to this action view
+                //    return View(movieToEdit);
+                //}
+            }
+            return RedirectToAction("Index");
         }
 
         //
         // POST: /Movies/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Movie movie)
         {
-            try
-            {
-                // TODO: Add update logic here
+            movie.UploadPoster(Request);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            // Update the contact
+            ((Movies)HttpRuntime.Cache["Movies"]).Update(movie);
+
+            // Retreive from the Application dictionary the reference of the Friends instance
+            //Playeds playeds = (playeds)HttpRuntime.Cache["Friends"];
+
+            // Reset the contact friend list
+            //contact.ClearFriendList(Friends);
+
+            // Extract the friends Id list from the hidden input 
+            // FriendsListItems embedded in the Http post request
+            //String[] FriendsListItems = Request["FriendsListItems"].Split(',');
+
+            // Add friends to the Friends collection
+            //foreach (String friendId in FriendsListItems)
+            //{
+            //    if (!String.IsNullOrEmpty(friendId))
+            //    {
+            //        Friends.Add(new Friend(contact.Id, int.Parse(friendId)));
+            //    }
+            //}
+            // Return the Index action of this controller
+            return RedirectToAction("Index");
         }
 
         //
         // GET: /Movies/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(String id)
         {
-            return View();
+            // Make sure that this action is called with an id
+            if (!String.IsNullOrEmpty(id))
+            {
+                ((Movies)HttpRuntime.Cache["Movies"]).Delete(id);
+            }
+            // Return the Index action of this controller
+            return RedirectToAction("Index");
         }
-
-        //
-        // POST: /Movies/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpGet]
+        public ActionResult Details(String id)
         {
-            try
+            // Make sure that this action is called with an id
+            if (!String.IsNullOrEmpty(id))
             {
-                // TODO: Add delete logic here
+                Movie movieToView = ((Movies)HttpRuntime.Cache["Movies"]).Get(int.Parse(id));
+                if (movieToView != null)
+                {
+                    // Pass the reference of the contact to view to this action view
+                    return View(movieToView);
+                }
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            // Return the Index action of this controller
+            return RedirectToAction("Index");
         }
     }
 }

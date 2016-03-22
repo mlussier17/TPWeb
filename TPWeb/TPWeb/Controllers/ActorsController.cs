@@ -111,7 +111,7 @@ namespace TPWeb.Controllers
 
             // Extract the friends Id list from the hidden input 
             // FriendsListItems embedded in the Http post request
-            String[] MoviesListItems = Request["MoviesListItems"].Split(',');
+            String[] MoviesListItems = Request["Items"].Split(',');
 
             // Add friends to the Friends collection
             foreach (String movieId in MoviesListItems)

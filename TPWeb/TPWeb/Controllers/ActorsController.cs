@@ -44,9 +44,9 @@ namespace TPWeb.Controllers
 
                 Parutions parutions = (Parutions)HttpRuntime.Cache["Parutions"];
 
-                String[] MoviesListItems = Request["FriendsListItems"].Split(',');
+                String[] FriendsListItems = Request["FriendsListItems"].Split(',');
 
-                foreach(String movieId in MoviesListItems)
+                foreach (String movieId in FriendsListItems)
                 {
                     if(!String.IsNullOrEmpty(movieId))
                     {

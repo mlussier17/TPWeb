@@ -3,8 +3,101 @@
 @{
     ViewBag.Title = "Acteurs";
 }
+<style>
+    .table-fixed thead { /* set the relative with of the table header*/
+        width: 98.5%;
+    }
 
-<h2>Index</h2>
+    .table-fixed tbody { /* set the height of the table body */
+        height: 638px;
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    .black-BG {
+        background-color: black;
+    }
+
+    .table-fixed thead,
+    .table-fixed tbody,
+    .table-fixed tr,
+    .table-fixed td,
+    .table-fixed th {
+        /* reorganize all the table cells */
+        display: block;
+    }
+
+        .table-fixed tbody td,
+        .table-fixed thead > tr > th {
+            float: left;
+            border-bottom-width: 0;
+        }
+
+    .table-fixed td { /* set the height of the table rows*/
+        height: 58px;
+        background-color: inherit;
+        font-weight: 600;
+    }
+
+    th { /* set the background color and text color of the table header*/
+        background-color: black;
+        color: white;
+    }
+
+        th img { /* move left the sort icon */
+            margin-left: -22px;
+        }
+
+    .col1 { /*Avatar*/
+        position: relative;
+        float: left;
+        width: 7%;
+    }
+
+    .col2 { /*FirstName*/
+        position: relative;
+        float: left;
+        width: 11%;
+    }
+
+    .col3 { /*LastName*/
+        position: relative;
+        float: left;
+        width: 15%;
+    }
+
+    .col4 { /*Email*/
+        position: relative;
+        float: left;
+        width: 24%;
+    }
+
+    .col5 { /*Phone*/
+        position: relative;
+        float: left;
+        width: 14%;
+    }
+
+    .col6 { /*BirthDay*/
+        position: relative;
+        float: left;
+        width: 11%;
+    }
+
+    .col7 { /*Sex*/
+        position: relative;
+        float: left;
+        width: 6%;
+        text-align: center;
+    }
+
+    .col8 { /* Links */
+        position: relative;
+        float: left;
+        width: 12%;
+    }
+</style>
+<h2>Acteurs</h2>
 
 <p>
     @Html.ActionLink("Ajouter", "Create")
@@ -49,3 +142,66 @@
 }
 
 </table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        //////////////////////////////////////////////////////////////
+        // MouseWhell handling
+        //////////////////////////////////////////////////////////////
+
+        // mousewheel event handler (delegate)
+        function wheel($div, deltaY) {
+            // Get the height of the first table row
+            var step = $(".table-fixed td:first").height() + 17;
+            // get the actual vertical scroll position
+            var pos = $div.scrollTop();
+            // compute the new vertical scroll position
+            var nextPos = pos + (step * Math.sign(-deltaY))
+            // set the new vertical scroll position
+            $div.scrollTop(nextPos);
+            // Uncomment the next line to dynamically write the into browser debugger console the vertical scroll position values
+            // console.log("DelatY: " + deltaY + ", Step: " + step + ", nextPos: " + nextPos);
+        }
+
+        // attach a mousewheel event handler (delegate) to table_data item
+        $('#table_data').bind('mousewheel', function (event) {
+            // call the custom mousewheel event handler (delegate)
+            wheel($(this), event.originalEvent.wheelDeltaY);
+            // bypass the default mousewheel handler
+            event.preventDefault();
+        });
+        // end of MouseWhell handling
+        ///////////////////////////////////////////////////////////////////////////
+
+        /////////////////////////////////////////////////////////////////////////////
+        //// Vertical scroll posision cookie handler
+        /////////////////////////////////////////////////////////////////////////////
+
+        //// When the document is fully uploaded into the browser...
+        //$(document).ready(function () {
+        //    // Retreive the scroll position
+        //    //////////////////////////////////////////////////////////////////////
+        //    // If scroll AND location cookie are set, and the location is the same
+        //    if ($.cookie("scroll") !== null &&
+        //        $.cookie("location") !== null &&
+        //        $.cookie("location") == $(location).attr('href')) {
+        //        // scroll to the position saved in the scroll cookie
+        //        $("#table_data").scrollTop($.cookie("scroll"));
+        //    }
+
+        //    // When a link is clicked...
+        //    $('a').on("click", function () {
+        //        // Save the scroll position
+        //        ////////////////////////////////////////////////////////////////
+        //        // Set a cookie that holds the scroll position
+        //        $.cookie("scroll", $("#table_data").scrollTop());
+        //        // set a cookie that holds the current location
+        //        $.cookie("location", $(location).attr('href'));
+        //    });
+        //});
+        // end of Vertical scroll posision cookie handler
+        ///////////////////////////////////////////////////////////////////////////
+
+    </script>
+    }

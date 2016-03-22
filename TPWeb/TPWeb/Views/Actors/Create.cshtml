@@ -58,16 +58,18 @@
                     This hidden input is used to pass the selected friend Ids
                     on the submit event of this form (refer to javascript code in utilies.js)
                 -->
-                    <input name="FriendsListItems" id="FriendsListItems" type="hidden" value="" />
-
-                    <select multiple="multiple" id="FriendsList" size="12"></select>
+                    <!-- NC -->
+                    <input name="Items" id="Items" type="hidden" value="" />
+                    <!-- NC -->
+                    <select multiple="multiple" id="ItemList" size="12"></select>
                 </div>
                 <div class="col-xs-2" style="text-align:center">
                     <img src="~/Images/Icons/Moveleft.png" class="CMD_Icon pointer" id="MoveLeft" />
                     <img src="~/Images/Icons/MoveRight.png" class="CMD_Icon pointer" id="MoveRight" />
                 </div>
                 <div class="col-xs-5">
-                    <select multiple="multiple" id="ContactsList" size="12">
+                    <!-- NC -->
+                    <select multiple="multiple" id="PoolList" size="12">
                         @foreach (TPWeb.Models.Movie Movie in ViewBag.Movies)
                         {
                             <option value="@Movie.id">
@@ -81,7 +83,8 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <!-- NC il faut id="save" -->
+                <input type="submit" value="Create" class="btn btn-default" id="save" />
             </div>
         </div>
     </div>

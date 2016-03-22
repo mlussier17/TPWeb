@@ -42,17 +42,16 @@ namespace TPWeb.Controllers
                 int newActorId = movies.Add(movie);
 
                 Parutions parutions = (Parutions)HttpRuntime.Cache["Parutions"];
-
-                String[] ParutionsList = Request["ParutionsList"].Split(',');
-
-                foreach(String parutionId in ParutionsList)
+                // NC récuppérer le input hidden qui contient les movie ID
+                String[] MoviesIdItems = Request["Items"].Split(',');
+                // NC
+                foreach (String movieId in MoviesIdItems)
                 {
-                    if (!String.IsNullOrEmpty(parutionId))
+                    if (!String.IsNullOrEmpty(movieId))
                     {
-                        parutions.Add(new Parution(newActorId, int.Parse(parutionId)));
+                        parutions.Add(new Parution(newActorId, int.Parse(movieId)));
                     }
                 }
-                int newContactId = movies.Add(movie);
 
                 return RedirectToAction("Index");
             }
@@ -70,24 +69,25 @@ namespace TPWeb.Controllers
             {
                 Movie movieToEdit = ((Movies)HttpRuntime.Cache["Movies"]).Get(int.Parse(id));
 
-                // Make sure the contact exist
-                //if (movieToEdit != null)
-                //{
-                //    // Retreive from the Session dictionary the reference of the ContactsView instance
-                //    MoviesView MoviesView = (MoviesView)Session["MoviesView"];
+                //Make sure the contact exist
+                if (movieToEdit != null)
+                {
+                    // Retreive from the Session dictionary the reference of the ContactsView instance
+                    ActorsView ActorsView = (ActorsView)Session["ActorsView"];
+                    MoviesView MoviesView = (MoviesView)Session["ContactsView"];
 
-                //    // Retreive from the Application dictionary the reference of the Friends instance
-                //    Playeds playeds = (Playeds)HttpRuntime.Cache["Playeds"];
+                    // Retreive from the Application dictionary the reference of the Friends instance
+                    Parutions Parutions = (Parutions)HttpRuntime.Cache["Parutions"];
 
-                //    // Store in ViewBag the friend list of the contact to edit
-                //    ViewBag.PlayedsList = movieToEdit.GetPlayedsList(playeds, MoviesView);
+                    // Store in ViewBag the friend list of the contact to edit
+                    ViewBag.ActorsList = movieToEdit.GetActorsList(Parutions, ActorsView);
 
-                //    // Store in ViewBag the "not yet friend" contact list  of the contact to edit
-                //    ViewBag.NotYetFriendsList = contactToEdit.GetNotYetFriendsList(Friends, ContactsView);
+                    // Store in ViewBag the "not yet friend" contact list  of the contact to edit
+                    ViewBag.NotYetActorsList = movieToEdit.GetNotYetActorsList(Parutions, ActorsView);
 
-                //    // Pass the contact to edit reference to this action view
-                //    return View(movieToEdit);
-                //}
+                    // Pass the contact to edit reference to this action view
+                    return View(movieToEdit);
+                }
             }
             return RedirectToAction("Index");
         }
@@ -103,24 +103,24 @@ namespace TPWeb.Controllers
             ((Movies)HttpRuntime.Cache["Movies"]).Update(movie);
 
             // Retreive from the Application dictionary the reference of the Friends instance
-            //Playeds playeds = (playeds)HttpRuntime.Cache["Friends"];
+            Parutions Parutions = (Parutions)HttpRuntime.Cache["Parutions"];
 
-            // Reset the contact friend list
-            //contact.ClearFriendList(Friends);
+             //Reset the contact friend list
+            movie.ClearActorList(Parutions);
 
-            // Extract the friends Id list from the hidden input 
-            // FriendsListItems embedded in the Http post request
-            //String[] FriendsListItems = Request["FriendsListItems"].Split(',');
+             //Extract the friends Id list from the hidden input 
+             //FriendsListItems embedded in the Http post request
+            String[] ActorsListItems = Request["Items"].Split(',');
 
-            // Add friends to the Friends collection
-            //foreach (String friendId in FriendsListItems)
-            //{
-            //    if (!String.IsNullOrEmpty(friendId))
-            //    {
-            //        Friends.Add(new Friend(contact.Id, int.Parse(friendId)));
-            //    }
-            //}
-            // Return the Index action of this controller
+             //Add friends to the Friends collection
+            foreach (String actorId in ActorsListItems)
+            {
+                if (!String.IsNullOrEmpty(actorId))
+                {
+                    Parutions.Add(new Parution(movie.id, int.Parse(actorId)));
+                }
+            }
+             //Return the Index action of this controller
             return RedirectToAction("Index");
         }
 
@@ -145,6 +145,8 @@ namespace TPWeb.Controllers
                 Movie movieToView = ((Movies)HttpRuntime.Cache["Movies"]).Get(int.Parse(id));
                 if (movieToView != null)
                 {
+                    ViewBag.ParutionsList = movieToView.GetActorsList((Parutions)HttpRuntime.Cache["Parutions"],
+                                                                       (ActorsView)Session["ActorsView"]);
                     // Pass the reference of the contact to view to this action view
                     return View(movieToView);
                 }

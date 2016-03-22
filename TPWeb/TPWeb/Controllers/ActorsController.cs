@@ -43,12 +43,12 @@ namespace TPWeb.Controllers
                 int newActorId = actors.Add(actor);
 
                 Parutions parutions = (Parutions)HttpRuntime.Cache["Parutions"];
-
-                String[] FriendsListItems = Request["FriendsListItems"].Split(',');
-
-                foreach (String movieId in FriendsListItems)
+                // NC récuppérer le input hidden qui contient les movie ID
+                String[] MoviesIdItems = Request["Items"].Split(',');
+                // NC
+                foreach (String movieId in MoviesIdItems)
                 {
-                    if(!String.IsNullOrEmpty(movieId))
+                    if (!String.IsNullOrEmpty(movieId))
                     {
                         parutions.Add(new Parution(newActorId, int.Parse(movieId)));
                     }
@@ -148,6 +148,8 @@ namespace TPWeb.Controllers
                 Actor actorToView = ((Actors)HttpRuntime.Cache["Actors"]).Get(int.Parse(id));
                 if (actorToView != null)
                 {
+                    ViewBag.ParutionsList = actorToView.GetMoviesList((Parutions)HttpRuntime.Cache["Parutions"],
+                                                                       (MoviesView)Session["MoviesView"]);
                     // Pass the reference of the contact to view to this action view
                     return View(actorToView);
                 }

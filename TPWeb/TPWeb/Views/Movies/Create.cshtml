@@ -9,49 +9,57 @@
 @using (Html.BeginForm("Create", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Film</h4>
         <hr />
-        @Html.ValidationSummary(true)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.title, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.title)
-                @Html.ValidationMessageFor(model => model.title)
+                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.description)
-                @Html.ValidationMessageFor(model => model.description)
+                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.country, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.country)
-                @Html.ValidationMessageFor(model => model.country)
+                @Html.EditorFor(model => model.country, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.year, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.year)
-                @Html.ValidationMessageFor(model => model.year)
+                @Html.EditorFor(model => model.year, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.year, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.categorie, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.categorie)
-                @Html.ValidationMessageFor(model => model.categorie)
+                @Html.EditorFor(model => model.categorie, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.categorie, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.directors, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.directors, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.directors, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -64,14 +72,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.directors, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.directors)
-                @Html.ValidationMessageFor(model => model.directors)
-            </div>
-        </div>
-
         <div class="main col-md-6">
             <h4>Liste des acteurs</h4>
             <hr />
@@ -81,16 +81,18 @@
                     This hidden input is used to pass the selected friend Ids
                     on the submit event of this form (refer to javascript code in utilies.js)
                 -->
-                    <input name="ActorsListItems" id="ActorsListItems" type="hidden" value="" />
-
-                    <select multiple="multiple" id="ActorsList" size="12"></select>
+                    <!-- NC -->
+                    <input name="Items" id="Items" type="hidden" value="" />
+                    <!-- NC -->
+                    <select multiple="multiple" id="ItemList" size="12"></select>
                 </div>
                 <div class="col-xs-2" style="text-align:center">
                     <img src="~/Images/Icons/Moveleft.png" class="CMD_Icon pointer" id="MoveLeft" />
                     <img src="~/Images/Icons/MoveRight.png" class="CMD_Icon pointer" id="MoveRight" />
                 </div>
                 <div class="col-xs-5">
-                    <select multiple="multiple" id="ContactsList" size="12">
+                    <!-- NC -->
+                    <select multiple="multiple" id="PoolList" size="12">
                         @foreach (TPWeb.Models.Actor Actor in ViewBag.Actors)
                         {
                             <option value="@Actor.id">
@@ -101,13 +103,14 @@
                 </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <!-- NC il faut id="save" -->
+                    <input type="submit" value="Create" class="btn btn-default" id="save" />
+                </div>
             </div>
         </div>
-    </div>
+    
 }
 
 <div>

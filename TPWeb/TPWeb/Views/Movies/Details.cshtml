@@ -3,30 +3,44 @@
 <div>
     <h4>Movie</h4>
 	<hr />
-    <dl class="dl-horizontal">
-        <dt>@Html.DisplayNameFor(model => model.title)</dt>
-        <dd>@Html.DisplayFor(model => model.title)</dd>
+    <div class="row">
+        <div class="col-md-2">
+            <img src="@Url.Content(Model.GetPosterURL())" class="BigAvatar" />
+        </div>
+        <div class="col-md-7">
+            <dl class="dl-horizontal">
+                <dt>@Html.DisplayNameFor(model => model.title)</dt>
+                <dd>@Html.DisplayFor(model => model.title)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.description)</dt>
-        <dd>@Html.DisplayFor(model => model.description)</dd>
+                <dt>@Html.DisplayNameFor(model => model.description)</dt>
+                <dd>@Html.DisplayFor(model => model.description)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.country)</dt>
-        <dd>@Html.DisplayFor(model => model.country)</dd>
+                <dt>@Html.DisplayNameFor(model => model.country)</dt>
+                <dd>@Html.DisplayFor(model => model.country)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.year)</dt>
-        <dd>@Html.DisplayFor(model => model.year)</dd>
+                <dt>@Html.DisplayNameFor(model => model.year)</dt>
+                <dd>@Html.DisplayFor(model => model.year)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.categorie)</dt>
-        <dd>@Html.DisplayFor(model => model.categorie)</dd>
+                <dt>@Html.DisplayNameFor(model => model.categorie)</dt>
+                <dd>@Html.DisplayFor(model => model.categorie)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.poster)</dt>
-        <dd><img src="@Url.Content(Model.GetPosterURL())" class="BigAvatar" /></dd>
+                <dt>@Html.DisplayNameFor(model => model.directors)</dt>
+                <dd>@Html.DisplayFor(model => model.directors)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.directors)</dt>
-        <dd>@Html.DisplayFor(model => model.directors)</dd>
-
-    </dl>
-</div>
+            </dl>
+            <div class="col-md-3" style="font-size:large;">
+                <h3 style="margin-top:0px;">Liste de films</h3>
+                <select multiple="multiple" id="ParutionsList" size="7">
+                    @foreach (TPWeb.Models.Actor Actor in ViewBag.ParutionsList)
+                    {
+                        <option value="@Actor.id">
+                            @Actor.name
+                        </option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
 <p>
     @Html.ActionLink("Modifier", "Edit", new { id = Model.id }) |
     @Html.ActionLink("Retour", "Index")

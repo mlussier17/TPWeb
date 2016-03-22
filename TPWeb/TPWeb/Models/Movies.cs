@@ -127,7 +127,7 @@ namespace TPWeb.Models
 
             foreach (Parution Parution in ParutionsList)
             {
-                if (this.id == Parution.ActorId)
+                if (this.id == Parution.MovieId)
                     ActorMoviesList.Add(actors.Get(Parution.ActorId).Clone());
             }
 
@@ -143,7 +143,7 @@ namespace TPWeb.Models
             foreach (Actor Actor in ActorList)
             {
                 bool played = false;
-                foreach (Actor actor in ActorList)
+                foreach (Actor actor in ParutionsList)
                 {
                     if (Actor.id == actor.id)
                     {

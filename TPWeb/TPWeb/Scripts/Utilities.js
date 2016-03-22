@@ -57,46 +57,50 @@ $("a.confirm").click(function (e) {
 
 ///////////////////////////////////////////////////////////////////
 // On the click event on the image id="MoveLeft"
-// Move a selected option from the contacts listbox to 
-// the friends listbox
 ///////////////////////////////////////////////////////////////////
 $("#MoveLeft").on('click', function () {
-    var movingVal = $('#ContactsList option:selected').val();
-    var movingItem = $('#ContactsList option:selected').text();
-    if (movingItem != "") {
-        $('#ContactsList option:selected').remove();
-        var option = new Option(movingItem, movingVal);
-        $('#FriendsList').append(option);
-        SortSelect("FriendsList");
-    }
+    $('#PoolList option:selected').each(function () {
+        var movingItemVal = $(this).val();
+        var movingItemText = $(this).text();
+        if (movingItemText != "") {
+
+            $('#PoolList option:selected').remove();
+            var option = new Option(movingItemText, movingItemVal);
+            $('#ItemList').append(option);
+            SortSelect("ItemList");
+            //DisableIcon("#MoveLeft");
+        }
+    });
 })
 
 ///////////////////////////////////////////////////////////////////
 // On the click event on the image id="MoveRight"
-// Move a selected option from the friends listbox to 
-// the contacts listbox
 ///////////////////////////////////////////////////////////////////
 $("#MoveRight").on('click', function () {
-    var movingVal = $('#FriendsList option:selected').val();
-    var movingItem = $('#FriendsList option:selected').text();
-    if (movingItem != "") {
-        $('#FriendsList option:selected').remove();
-        var option = new Option(movingItem, movingVal);
-        $('#ContactsList').append(option);
-        SortSelect("ContactsList");
-    }
+    $('#ItemList option:selected').each(function () {
+        var movingItemVal = $(this).val();
+        var movingItemText = $(this).text();
+        if (movingItemText != "") {
+
+            $('#ItemList option:selected').remove();
+            var option = new Option(movingItemText, movingItemVal);
+            $('#PoolList').append(option);
+            SortSelect("PoolList");
+            //DisableIcon("#MoveRight");
+        }
+    });
 })
 
 ///////////////////////////////////////////////////////////////////
-// Save the friends list id into the hidden input FriendsListItems
+// Save the items list id into the hidden input Items
 // Note: The form submit button must have id="save"
 ///////////////////////////////////////////////////////////////////
 $("#save").on('click', function (event) {
-    var friends_Id_String_List = "";
-    $('#ParutionsList option').each(function () {
-        friends_Id_String_List += this.value + ",";
+    var items_Id_String_List = "";
+    $('#ItemList option').each(function () {
+        items_Id_String_List += this.value + ",";
     });
-    $("#FriendsListItems").val(friends_Id_String_List);
+    $("#Items").val(items_Id_String_List);
 });
 
 ///////////////////////////////////////////////////////////////////

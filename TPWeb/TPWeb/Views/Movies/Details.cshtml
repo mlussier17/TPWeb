@@ -28,8 +28,9 @@
                 <dd>@Html.DisplayFor(model => model.directors)</dd>
 
             </dl>
+        </div>
             <div class="col-md-3" style="font-size:large;">
-                <h3 style="margin-top:0px;">Liste de films</h3>
+                <h3 style="margin-top:0px;">Liste d'acteurs</h3>
                 <select multiple="multiple" id="ParutionsList" size="7">
                     @foreach (TPWeb.Models.Actor Actor in ViewBag.ParutionsList)
                     {
@@ -40,8 +41,14 @@
                 </select>
             </div>
         </div>
+    <p>
+        @Html.ActionLink("Modifier", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Retour", "Index")
+    </p>
     </div>
-<p>
-    @Html.ActionLink("Modifier", "Edit", new { id = Model.id }) |
-    @Html.ActionLink("Retour", "Index")
-</p>
+
+@section Scripts {
+    <script>
+        $("document").ready(SortSelect("FriendsList"));
+    </script>
+}

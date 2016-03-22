@@ -74,8 +74,7 @@ namespace TPWeb.Controllers
                 if (actorToEdit != null)
                 {
                     // Retreive from the Session dictionary the reference of the ContactsView instance
-                    ActorsView ActorsView = (ActorsView)Session["ActorsView"];
-                    MoviesView MoviesView = (MoviesView)Session["ContactsView"];
+                    MoviesView MoviesView = (MoviesView)Session["MoviesView"];
 
                     // Retreive from the Application dictionary the reference of the Friends instance
                     Parutions Parutions = (Parutions)HttpRuntime.Cache["Parutions"];
@@ -84,7 +83,7 @@ namespace TPWeb.Controllers
                     ViewBag.MoviesList = actorToEdit.GetMoviesList(Parutions, MoviesView);
 
                     // Store in ViewBag the "not yet friend" contact list  of the contact to edit
-                    ViewBag.NotYetFriendsList = actorToEdit.GetNotYetMoviesList(Parutions, MoviesView);
+                    ViewBag.NotYetMoviesList = actorToEdit.GetNotYetMoviesList(Parutions, MoviesView);
 
                     // Pass the contact to edit reference to this action view
                     return View(actorToEdit);

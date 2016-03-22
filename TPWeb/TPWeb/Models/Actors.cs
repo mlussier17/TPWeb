@@ -132,9 +132,9 @@ namespace TPWeb.Models
             foreach (Movie Movie in MovieList)
             {
                 bool played = false;
-                foreach (Movie movie in MovieList)
+                foreach (Movie movie in ParutionsList)
                 {
-                    if (movie.id == movie.id)
+                    if (Movie.id == movie.id)
                     {
                         played = true;
                         break;

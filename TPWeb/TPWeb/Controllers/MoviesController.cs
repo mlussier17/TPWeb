@@ -74,7 +74,6 @@ namespace TPWeb.Controllers
                 {
                     // Retreive from the Session dictionary the reference of the ContactsView instance
                     ActorsView ActorsView = (ActorsView)Session["ActorsView"];
-                    MoviesView MoviesView = (MoviesView)Session["ContactsView"];
 
                     // Retreive from the Application dictionary the reference of the Friends instance
                     Parutions Parutions = (Parutions)HttpRuntime.Cache["Parutions"];

@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Actor</h4>
+        <h4>Acteurs</h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.id)
@@ -50,9 +50,46 @@
             </div>
         </div>
 
+        <div class="main col-md-6">
+            <h4>Liste des films</h4>
+            <hr />
+            <div class="row">
+                <div class="col-xs-5">
+                    <!--
+                    This hidden input is used to pass the selected friend Ids
+                    on the submit event of this form (refer to javascript code in utilies.js)
+                -->
+                    <!-- NC -->
+                    <input name="Items" id="Items" type="hidden" value="" />
+                    <select multiple="multiple" id="ItemList" size="12">
+                        @foreach (TPWeb.Models.Movie Movie in ViewBag.MoviesList)
+                        {
+                            <option value="@Movie.id">
+                                @Movie.title
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-xs-2" style="text-align:center">
+                    <img src="~/Images/Icons/Moveleft.png" class="CMD_Icon pointer" id="MoveLeft" />
+                    <img src="~/Images/Icons/MoveRight.png" class="CMD_Icon pointer" id="MoveRight" />
+                </div>
+                <div class="col-xs-5">
+                    <!-- NC -->
+                    <select multiple="multiple" id="PoolList" size="12">
+                        @foreach (TPWeb.Models.Movie Movie in ViewBag.NotYetMoviesList)
+                        {
+                            <option value="@Movie.id">
+                                @Movie.title
+                            </option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Modifier" class="btn btn-default" id="save" />
             </div>
         </div>
     </div>

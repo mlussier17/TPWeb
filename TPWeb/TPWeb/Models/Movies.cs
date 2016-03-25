@@ -308,6 +308,7 @@ namespace TPWeb.Models
 
         #endregion
     }
+
     class MovieComparer : IComparer<Movie>
     {
         #region Sort parameters
@@ -384,6 +385,7 @@ namespace TPWeb.Models
         }
         #endregion
     }
+
     public class MoviesView
     {
         private List<Movie> List = new List<Movie>();

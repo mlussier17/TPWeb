@@ -132,6 +132,11 @@ namespace TPWeb.Controllers
             // Make sure that this action is called with an id
             if (!String.IsNullOrEmpty(id))
             {
+                Actor actorToDelete = ((Actors)HttpRuntime.Cache["Actors"]).Get(int.Parse(id));
+                // Retreive from the Application dictionary the reference of the Friends instance
+                Parutions parutions = (Parutions)HttpRuntime.Cache["Parutions"];
+                // Clear the contact friend list
+                actorToDelete.ClearMovieList(parutions);
                 ((Actors)HttpRuntime.Cache["Actors"]).Delete(id);
             }
             // Return the Index action of this controller

@@ -47,7 +47,7 @@ namespace TPWeb.Models
             clone.id = this.id;
             clone.name = this.name;
             clone.country = this.country;
-            clone.birthday = this.birthday;
+            clone.birthday = new DateTime(this.birthday.Ticks);
             clone.pictureId = this.pictureId;
             return clone;
         }

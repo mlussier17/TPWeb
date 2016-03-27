@@ -96,16 +96,16 @@
         float: left;
         width: 12%;
     }
+    #addActor {
+        margin-left: 1%;
+    }
 </style>
-<h2>Acteurs</h2>
-
-<p>
-    <a href="@Url.Action("Create")" style="text-decoration:none">
-        <img src="~/Images/Icons/Add.png" class="CMD_Icon Pointer"
-             data-toggle="tooltip" data-placement="right" title="Nouveau contact"
-             style="margin: auto;" />
-        </a>
-</p>
+<h3>
+    Gestion des acteurs
+    <a id="addActor" href="@Url.Action("Create")" style="text-decoration:none">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a>
+</h3>
 <table class="table">
     <tr>
         <th>

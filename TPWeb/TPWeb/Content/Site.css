@@ -57,6 +57,7 @@ body {
 */
 .dl-horizontal dt {
     white-space: normal;
+    padding-bottom: 10px;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -120,6 +121,10 @@ Small_CMD_Icon {
     object-position: center;
     margin-left: 0;
     padding: 0;
+}
+
+.details {
+    font-size: large;
 }
 
 select {

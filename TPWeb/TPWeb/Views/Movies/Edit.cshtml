@@ -42,8 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.year, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.year)
-                @Html.ValidationMessageFor(model => model.year)
+                @Html.DropDownListFor(model => model.year, new SelectList(Enumerable.Range(DateTime.Now.Year - 86, DateTime.Now.Year - 1920), DateTime.Now.Year), new { @class = "form-control" })
             </div>
         </div>
 

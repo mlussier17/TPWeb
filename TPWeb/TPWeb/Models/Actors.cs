@@ -16,7 +16,7 @@ namespace TPWeb.Models
         public int id { get; set; }
 
         [Display(Name = "Nom")]
-        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
+        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9 àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
         [StringLength(50), Required]
         public String name { get; set; }
 
@@ -32,7 +32,7 @@ namespace TPWeb.Models
         [Display(Name = "Photo")]
         public String pictureId { get; set; }
 
-        public ImageGUIDReference defaultPicture;
+        
         #endregion
 
         #region Construction
@@ -91,6 +91,7 @@ namespace TPWeb.Models
         #endregion
 
         #region Picture
+        private ImageGUIDReference defaultPicture;
 
         public String GetAvatarURL()
         {
@@ -368,7 +369,7 @@ namespace TPWeb.Models
             {
                 List[index].name = actor.name;
                 List[index].country = actor.country;
-                List[index].pictureId = actor.pictureId;
+                if (actor.pictureId != null)List[index].pictureId = actor.pictureId;
                 List[index].BirthDay = new DateTime(actor.BirthDay.Ticks);
 
                 Save();

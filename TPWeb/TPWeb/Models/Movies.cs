@@ -20,21 +20,20 @@ namespace TPWeb.Models
         public String title { get; set; }
 
         [Display(Name = "Description")]
-        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
+        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9 àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
         [StringLength(1024), Required]
         public String description { get; set; }
 
         [Display(Name = "Pays")]
-        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
+        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9 àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
         [StringLength(50), Required]
         public String country { get; set; }
 
         [Display(Name = "Année")]
-        [RegularExpression(@"^([0-9])", ErrorMessage = "Année invalide")]
         public int year { get; set; }
 
         [Display(Name = "Catégorie")]
-        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
+        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9 àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
         [StringLength(50), Required]
         public String categorie { get; set; }
 
@@ -42,7 +41,7 @@ namespace TPWeb.Models
         public String poster { get; set; }
 
         [Display(Name = "Realisateur")]
-        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
+        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9 àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
         [StringLength(100), Required]
         public String directors { get; set; }
 
@@ -286,7 +285,7 @@ namespace TPWeb.Models
                 List[index].country = movie.country;
                 List[index].description = movie.description;
                 List[index].year = movie.year;
-                List[index].poster = movie.poster;
+                if (movie.poster != null) List[index].poster = movie.poster;
                 List[index].categorie = movie.categorie;
                 List[index].directors = movie.directors;
 

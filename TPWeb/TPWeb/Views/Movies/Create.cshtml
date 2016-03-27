@@ -42,67 +42,66 @@
         <div class="form-group">
             @Html.LabelFor(model => model.year, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.year, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.year, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.year, new SelectList(Enumerable.Range(DateTime.Now.Year - 86, DateTime.Now.Year - 1920), DateTime.Now.Year), new { @class = "form-control" })
             </div>
-        </div>
+       </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.categorie, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.categorie, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.categorie, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.directors, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.directors, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.directors, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.poster, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <img id="UploadedImage" class="UploadedImage" src="@Url.Content(Model.GetPosterURL())" />
-                <input id="ImageUploader" name="ImageUploader" type="file" /> <br />
-                <input id="UploadButton" class="btn btn-primary" type="button" value="Choisir une affiche..." />
-            </div>
-        </div>
-
-        <div class="main col-md-6">
-            <h4>Liste des acteurs</h4>
-            <hr />
-            <div class="row">
-                <div class="col-xs-5">
-                    <!--
-                    This hidden input is used to pass the selected friend Ids
-                    on the submit event of this form (refer to javascript code in utilies.js)
-                -->
-                    <!-- NC -->
-                    <input name="Items" id="Items" type="hidden" value="" />
-                    <!-- NC -->
-                    <select multiple="multiple" id="ItemList" size="12"></select>
+            <div class="form-group">
+                @Html.LabelFor(model => model.categorie, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.categorie, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.categorie, "", new { @class = "text-danger" })
                 </div>
-                <div class="col-xs-2" style="text-align:center">
-                    <img src="~/Images/Icons/Moveleft.png" class="CMD_Icon pointer" id="MoveLeft" />
-                    <img src="~/Images/Icons/MoveRight.png" class="CMD_Icon pointer" id="MoveRight" />
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.directors, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.directors, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.directors, "", new { @class = "text-danger" })
                 </div>
-                <div class="col-xs-5">
-                    <!-- NC -->
-                    <select multiple="multiple" id="PoolList" size="12">
-                        @foreach (TPWeb.Models.Actor Actor in ViewBag.Actors)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.poster, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <img id="UploadedImage" class="UploadedImage" src="@Url.Content(Model.GetPosterURL())" />
+                    <input id="ImageUploader" name="ImageUploader" type="file" /> <br />
+                    <input id="UploadButton" class="btn btn-primary" type="button" value="Choisir une affiche..." />
+                </div>
+            </div>
+
+            <div class="main col-md-6">
+                <h4>Liste des acteurs</h4>
+                <hr />
+                <div class="row">
+                    <div class="col-xs-5">
+                        <!--
+                        This hidden input is used to pass the selected friend Ids
+                        on the submit event of this form (refer to javascript code in utilies.js)
+                    -->
+                        <!-- NC -->
+                        <input name="Items" id="Items" type="hidden" value="" />
+                        <!-- NC -->
+                        <select multiple="multiple" id="ItemList" size="12"></select>
+                    </div>
+                    <div class="col-xs-2" style="text-align:center">
+                        <img src="~/Images/Icons/Moveleft.png" class="CMD_Icon pointer" id="MoveLeft" />
+                        <img src="~/Images/Icons/MoveRight.png" class="CMD_Icon pointer" id="MoveRight" />
+                    </div>
+                    <div class="col-xs-5">
+                        <!-- NC -->
+                        <select multiple="multiple" id="PoolList" size="12">
+                            @foreach (TPWeb.Models.Actor Actor in ViewBag.Actors)
                         {
-                            <option value="@Actor.id">
-                                @Actor.name
-                            </option>
+                                <option value="@Actor.id">
+                                    @Actor.name
+                                </option>
                         }
-                    </select>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <!-- NC il faut id="save" -->

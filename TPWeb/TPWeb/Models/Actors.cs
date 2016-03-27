@@ -27,7 +27,7 @@ namespace TPWeb.Models
 
         [Display(Name = "Naissance")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime birthday { get; set; }
+        public DateTime BirthDay { get; set; }
 
         [Display(Name = "Photo")]
         public String pictureId { get; set; }
@@ -39,7 +39,7 @@ namespace TPWeb.Models
         public Actor()
         {
             defaultPicture = new ImageGUIDReference(@"~/Images/Pictures/", @"Default.png");
-            birthday = DateTime.Now;
+            BirthDay = DateTime.Now;
         }
         public Actor Clone()
         {
@@ -47,7 +47,7 @@ namespace TPWeb.Models
             clone.id = this.id;
             clone.name = this.name;
             clone.country = this.country;
-            clone.birthday = new DateTime(this.birthday.Ticks);
+            clone.BirthDay = new DateTime(this.BirthDay.Ticks);
             clone.pictureId = this.pictureId;
             return clone;
         }
@@ -66,14 +66,14 @@ namespace TPWeb.Models
             if (!String.IsNullOrEmpty(tokens[3]))
                 try
                 {
-                    actor.birthday = DateTime.Parse(tokens[3]);
+                    actor.BirthDay = DateTime.Parse(tokens[3]);
                 }
                 catch (Exception e)
                 {
-                    actor.birthday = DateTime.Now;
+                    actor.BirthDay = DateTime.Now;
                 }
             else
-                actor.birthday = DateTime.Now;
+                actor.BirthDay = DateTime.Now;
 
             actor.pictureId = tokens[4];
             
@@ -85,7 +85,7 @@ namespace TPWeb.Models
             return id.ToString() + SEPARATOR +
                    name + SEPARATOR +
                    country + SEPARATOR +
-                   birthday + SEPARATOR +
+                   BirthDay + SEPARATOR +
                    pictureId + SEPARATOR;
         }
         #endregion
@@ -219,9 +219,9 @@ namespace TPWeb.Models
 
                 case "birthday":
                     if (ascending)
-                        return DateCompare(x.birthday, y.birthday);
+                        return DateCompare(x.BirthDay, y.BirthDay);
                     else
-                        return DateCompare(y.birthday, x.birthday);
+                        return DateCompare(y.BirthDay, x.BirthDay);
             }
 
             return 0;
@@ -369,7 +369,7 @@ namespace TPWeb.Models
                 List[index].name = actor.name;
                 List[index].country = actor.country;
                 List[index].pictureId = actor.pictureId;
-                List[index].birthday = new DateTime(actor.birthday.Ticks);
+                List[index].BirthDay = new DateTime(actor.BirthDay.Ticks);
 
                 Save();
             }

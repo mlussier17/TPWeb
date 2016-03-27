@@ -21,7 +21,7 @@ namespace TPWeb.Models
 
         [Display(Name = "Description")]
         [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
-        [StringLength(100), Required]
+        [StringLength(1024), Required]
         public String description { get; set; }
 
         [Display(Name = "Pays")]

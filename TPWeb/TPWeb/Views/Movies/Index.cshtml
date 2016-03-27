@@ -99,7 +99,11 @@
 </style>
 <h2>Films</h2>
 <p>
-    @Html.ActionLink("Ajouter", "Create")
+    <a href="@Url.Action("Create")" style="text-decoration:none">
+        <img src="~/Images/Icons/AddMovie.png" class="CMD_Icon Pointer"
+             data-toggle="tooltip" data-placement="right" title="Nouveau contact"
+             style="margin: auto;" />
+    </a>
 </p>
 <table class="table">
     <tr>
@@ -151,9 +155,29 @@
             @Html.DisplayFor(modelItem => item.directors)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            <a href="@Url.Action("Edit", "Movies", new { id = item.id })" style="text-decoration:none">
+                <img src="~/Images/Icons/Modify.png"
+                     class="CMD_Icon Pointer"
+                     data-toggle="tooltip"
+                     data-placement="right"
+                     title="Modifier @item.title" />
+            </a>
+            <a href="@Url.Action("Details", "Movies", new { id = item.id })" style="text-decoration:none">
+                <img src="~/Images/Icons/Details.png"
+                     class="CMD_Icon Pointer"
+                     data-toggle="tooltip"
+                     data-placement="right"
+                     title="Voir les détails de @item.title" />
+            </a>
+            <a href="@Url.Action("Delete", "Movies", new { id = item.id })" style="text-decoration:none"
+               class="confirm"
+               message="Voulez-vous vraiment effacer @item.title ?">
+                <img src="~/Images/Icons/DeleteMovie.png"
+                     class="CMD_Icon Pointer"
+                     data-toggle="tooltip"
+                     data-placement="right"
+                     title="Effacer @item.title" />
+            </a>
         </td>
     </tr>
 }

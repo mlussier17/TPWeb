@@ -39,17 +39,17 @@ namespace TPWeb.Controllers
 
                 movie.UploadPoster(Request);
 
-                int newActorId = movies.Add(movie);
+                int newMovieId = movies.Add(movie);
 
                 Parutions parutions = (Parutions)HttpRuntime.Cache["Parutions"];
                 // NC récuppérer le input hidden qui contient les movie ID
-                String[] MoviesIdItems = Request["Items"].Split(',');
+                String[] ActorsIdItems = Request["Items"].Split(',');
                 // NC
-                foreach (String movieId in MoviesIdItems)
+                foreach (String movieId in ActorsIdItems)
                 {
                     if (!String.IsNullOrEmpty(movieId))
                     {
-                        parutions.Add(new Parution(newActorId, int.Parse(movieId)));
+                        parutions.Add(new Parution(newMovieId, int.Parse(movieId)));
                     }
                 }
 

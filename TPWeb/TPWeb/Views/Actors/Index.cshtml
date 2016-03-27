@@ -100,7 +100,11 @@
 <h2>Acteurs</h2>
 
 <p>
-    @Html.ActionLink("Ajouter", "Create")
+    <a href="@Url.Action("Create")" style="text-decoration:none">
+        <img src="~/Images/Icons/Add.png" class="CMD_Icon Pointer"
+             data-toggle="tooltip" data-placement="right" title="Nouveau contact"
+             style="margin: auto;" />
+        </a>
 </p>
 <table class="table">
     <tr>
@@ -111,7 +115,7 @@
             @Html.DisplayNameFor(model => model.country)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.birthday)
+            @Html.DisplayNameFor(model => model.BirthDay)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.pictureId)
@@ -128,15 +132,35 @@
             @Html.DisplayFor(modelItem => item.country)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.birthday)
+            @Html.DisplayFor(modelItem => item.BirthDay)
         </td>
         <td>
             <img src="@Url.Content(item.GetAvatarURL())" class="SmallAvatar" />
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+            <a href="@Url.Action("Edit", "Actors", new { id = item.id })" style="text-decoration:none">
+                <img src="~/Images/Icons/Modify.png"
+                     class="CMD_Icon Pointer"
+                     data-toggle="tooltip"
+                     data-placement="right"
+                     title="Modifier @item.name" />
+            </a>
+            <a href="@Url.Action("Details", "Actors", new { id = item.id })" style="text-decoration:none">
+                <img src="~/Images/Icons/Details.png"
+                     class="CMD_Icon Pointer"
+                     data-toggle="tooltip"
+                     data-placement="right"
+                     title="Voir les détails de @item.name" />
+            </a>
+            <a href="@Url.Action("Delete", "Actors", new { id = item.id })" style="text-decoration:none"
+               class="confirm"
+               message="Voulez-vous vraiment effacer @item.name ?">
+                <img src="~/Images/Icons/delete.png"
+                     class="CMD_Icon Pointer"
+                     data-toggle="tooltip"
+                     data-placement="right"
+                     title="Effacer @item.name" />
+            </a>
         </td>
     </tr>
 }
@@ -179,27 +203,27 @@
         /////////////////////////////////////////////////////////////////////////////
 
         //// When the document is fully uploaded into the browser...
-        //$(document).ready(function () {
-        //    // Retreive the scroll position
-        //    //////////////////////////////////////////////////////////////////////
-        //    // If scroll AND location cookie are set, and the location is the same
-        //    if ($.cookie("scroll") !== null &&
-        //        $.cookie("location") !== null &&
-        //        $.cookie("location") == $(location).attr('href')) {
-        //        // scroll to the position saved in the scroll cookie
-        //        $("#table_data").scrollTop($.cookie("scroll"));
-        //    }
+        $(document).ready(function () {
+            // Retreive the scroll position
+            //////////////////////////////////////////////////////////////////////
+            // If scroll AND location cookie are set, and the location is the same
+            if ($.cookie("scroll") !== null &&
+                $.cookie("location") !== null &&
+                $.cookie("location") == $(location).attr('href')) {
+                // scroll to the position saved in the scroll cookie
+                $("#table_data").scrollTop($.cookie("scroll"));
+            }
 
-        //    // When a link is clicked...
-        //    $('a').on("click", function () {
-        //        // Save the scroll position
-        //        ////////////////////////////////////////////////////////////////
-        //        // Set a cookie that holds the scroll position
-        //        $.cookie("scroll", $("#table_data").scrollTop());
-        //        // set a cookie that holds the current location
-        //        $.cookie("location", $(location).attr('href'));
-        //    });
-        //});
+            // When a link is clicked...
+            $('a').on("click", function () {
+                // Save the scroll position
+                ////////////////////////////////////////////////////////////////
+                // Set a cookie that holds the scroll position
+                $.cookie("scroll", $("#table_data").scrollTop());
+                // set a cookie that holds the current location
+                $.cookie("location", $(location).attr('href'));
+            });
+        });
         // end of Vertical scroll posision cookie handler
         ///////////////////////////////////////////////////////////////////////////
 

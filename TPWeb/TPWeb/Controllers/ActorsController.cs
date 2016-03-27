@@ -63,7 +63,7 @@ namespace TPWeb.Controllers
         }
 
         //
-        // GET: /Actors/Edit/5
+        // GET: /Actors/Edit/{id}
         public ActionResult Edit(String id)
         {
             if (!String.IsNullOrEmpty(id))

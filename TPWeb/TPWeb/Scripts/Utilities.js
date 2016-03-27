@@ -3,7 +3,10 @@
 //  Auteur: Nicolas Chourot
 /////////////////////////////////////////////////////////////////////////////////////
 
-$(".datepicker").datepicker({format: 'yyyy-mm-dd'});
+$(".datepicker").datepicker({
+    format: 'yyyy-mm-dd',
+    orientation: "bottom auto"
+});
 $("#ImageUploader").change(function (e) { PreLoadImage(e); })
 $("#UploadButton").click(function () { $("#ImageUploader").trigger("click"); })
 

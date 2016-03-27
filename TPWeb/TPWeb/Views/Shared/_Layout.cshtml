@@ -21,10 +21,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Film", "Index", "Movies")</li>
-                    <li>@Html.ActionLink("Acteurs", "Index", "Actors")</li>
-                    <li>@Html.ActionLink("À propos", "Index", "Home")</li>
-                </ul>
+                    <li class ="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "active" : "")">@Html.ActionLink("Accueil", "Index", "Home")</li>
+                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Movies" ? "active" : "")">@Html.ActionLink("Film", "Index", "Movies")</li>
+                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Actors" ? "active" : "")">@Html.ActionLink("Acteurs", "Index", "Actors")</li>
+                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "About" ? "active" : "")">@Html.ActionLink("À propos", "Index", "About")</li>
+</ul>
             </div>
         </div>
     </div>

@@ -371,7 +371,7 @@ namespace TPWeb.Models
                 List[index].country = actor.country;
                 if (actor.pictureId != null)
                 {
-                    List[index].RemovePicture(); // Delete old
+                    if (List[index].pictureId != actor.pictureId) List[index].RemovePicture(); // Delete old
                     List[index].pictureId = actor.pictureId; 
                 }
                 List[index].BirthDay = new DateTime(actor.BirthDay.Ticks);

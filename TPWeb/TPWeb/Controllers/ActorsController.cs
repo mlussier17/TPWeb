@@ -100,7 +100,7 @@ namespace TPWeb.Controllers
         {
             actor.UploadPicture(Request);
 
-            // Update the contact
+            // Update the actor
             ((Actors)HttpRuntime.Cache["Actors"]).Update(actor);
 
             // Retreive from the Application dictionary the reference of the Friends instance
@@ -122,7 +122,7 @@ namespace TPWeb.Controllers
                 }
             }
             // Return the Index action of this controller
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id = actor.id });
         }
 
         //

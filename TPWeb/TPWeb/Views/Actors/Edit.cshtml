@@ -4,63 +4,60 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Modifier acteur</h2>
-
-
 @using (Html.BeginForm("Edit", "Actors", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>Acteurs</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.name)
-                @Html.ValidationMessageFor(model => model.name)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.country, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.country)
-                @Html.ValidationMessageFor(model => model.country)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BirthDay, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BirthDay, new { htmlAttributes = new { @class = "form-control datepicker" } })
-                @Html.ValidationMessageFor(model => model.BirthDay, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.pictureId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <img id="UploadedImage" class="UploadedImage" src="@Url.Content(Model.GetAvatarURL())" />
-                        <input id="ImageUploader" name="ImageUploader" type="file" /> <br />
-                        <input id="UploadButton" class="btn btn-primary" type="button" value="Choisir un avatar..." />
-            </div>
-        </div>
-
+    <div class="row">
         <div class="main col-md-6">
-            <h4>Liste des films</h4>
-            <hr />
+            <div class="form-horizontal">
+                <h3>
+                    Modification d'acteur&nbsp;&nbsp;
+                    <a href="@Url.Action("Details", new { id = Model.id })" style="text-decoration:none">
+                        <span title="Retour" class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </a>
+                </h3>
+                <hr>
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.id)
+                @Html.HiddenFor(model => model.pictureId)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.name, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.name, new { @class = "form-control text-box single-line" })
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.country, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.country, new { @class = "form-control text-box single-line" })
+                        @Html.ValidationMessageFor(model => model.country)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BirthDay, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.BirthDay, new { @class = "form-control datepicker text-box single-line valid" })
+                        @Html.ValidationMessageFor(model => model.BirthDay, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main col-md-5">
+            <h3>Filmographie</h3>
+            <hr>
             <div class="row">
-                <div class="col-xs-5">
+                <div class="col-xs-5 tightDivLeft">
                     <!--
-                    This hidden input is used to pass the selected friend Ids
-                    on the submit event of this form (refer to javascript code in utilies.js)
-                -->
+            This hidden input is used to pass the selected friend Ids
+            on the submit event of this form (refer to javascript code in utilies.js)
+        -->
                     <!-- NC -->
-                    <input name="Items" id="Items" type="hidden" value=""/>
+                    <input name="Items" id="Items" type="hidden" value="" />
                     <select multiple="multiple" id="ItemList" size="12">
                         @foreach (TPWeb.Models.Movie Movie in ViewBag.MoviesList)
                         {
@@ -70,11 +67,11 @@
                         }
                     </select>
                 </div>
-                <div class="col-xs-2" style="text-align:center">
+                <div class="col-xs-2 tightDiv" style="text-align:center">
                     <img src="~/Images/Icons/Moveleft.png" class="CMD_Icon pointer" id="MoveLeft" />
                     <img src="~/Images/Icons/MoveRight.png" class="CMD_Icon pointer" id="MoveRight" />
                 </div>
-                <div class="col-xs-5">
+                <div class="col-xs-5 tightDivRight">
                     <!-- NC -->
                     <select multiple="multiple" id="PoolList" size="12">
                         @foreach (TPWeb.Models.Movie Movie in ViewBag.NotYetMoviesList)
@@ -87,17 +84,23 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Modifier" class="btn btn-default" id="save" />
+        <div class="main col-md-6">
+            <input id="UploadButton" class="btn btn-primary" type="button" value="Choisir une photo...">
+            <hr>
+            <div class="row">
+                <div class="col-md-offset-3 col-md-9">
+                    <div class="col-md-6">
+                        <img id="UploadedImage" class="UploadedImage" src="@Url.Content(Model.GetAvatarURL())" />
+                        <input id="ImageUploader" name="ImageUploader" type="file"> <br> <br>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div class="main col-md-5">
+            <input type="submit" id="save" class="btn btn-success" value="Soumettre...">
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Retour", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

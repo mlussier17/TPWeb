@@ -8,10 +8,20 @@
         width: 98.5%;
     }
 
+    .table-fixed tr {
+        background-color: #FFF;
+        color: #000;
+    }
+    .table-fixed tr:hover td{
+        background-color: lightgray;
+        cursor: pointer;
+    }
+
     .table-fixed tbody { /* set the height of the table body */
-        height: 638px;
+        height: 680px;
         overflow-y: auto;
         width: 100%;
+        min-width: 550px;
     }
 
     .black-BG {
@@ -106,70 +116,34 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </a>
 </h3>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.country)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BirthDay)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.pictureId)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.country)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BirthDay)
-        </td>
-        <td>
-            <img src="@Url.Content(item.GetAvatarURL())" class="SmallAvatar" />
-        </td>
-        <td>
-            <a href="@Url.Action("Edit", "Actors", new { id = item.id })" style="text-decoration:none">
-                <img src="~/Images/Icons/Modify.png"
-                     class="CMD_Icon Pointer"
-                     data-toggle="tooltip"
-                     data-placement="right"
-                     title="Modifier @item.name" />
-            </a>
-            <a href="@Url.Action("Details", "Actors", new { id = item.id })" style="text-decoration:none">
-                <img src="~/Images/Icons/Details.png"
-                     class="CMD_Icon Pointer"
-                     data-toggle="tooltip"
-                     data-placement="right"
-                     title="Voir les détails de @item.name" />
-            </a>
-            <a href="@Url.Action("Delete", "Actors", new { id = item.id })" style="text-decoration:none"
-               class="confirm"
-               message="Voulez-vous vraiment effacer @item.name ?">
-                <img src="~/Images/Icons/delete.png"
-                     class="CMD_Icon Pointer"
-                     data-toggle="tooltip"
-                     data-placement="right"
-                     title="Effacer @item.name" />
-            </a>
-        </td>
-    </tr>
-}
-
+<table class="table table-fixed black-BG">
+    <thead>
+        <tr>
+            <th class="col-xs-1"></th>
+            <th class="col-xs-4">@Html.DisplayNameFor(model => model.name)</th>
+            <th class="col-xs-3">@Html.DisplayNameFor(model => model.country)</th>
+            <th class="col-xs-3"> @Html.DisplayNameFor(model => model.BirthDay)</th>
+            <th class="col-xs-1"></th>
+        </tr>
+    </thead>
+    <tbody id="table_data_actors" class="table_data save_Actors_scroll">
+        @foreach (var item in Model)
+        {
+            <tr href="/Actors/Details/@Html.DisplayFor(modelItem => item.id)">
+                <td class="col-xs-1"><img src="@Url.Content(item.GetAvatarURL())" class="SmallAvatar" /></td>
+                <td class="col-xs-4">@Html.DisplayFor(modelItem => item.name)</td>
+                <td class="col-xs-3">@Html.DisplayFor(modelItem => item.country)</td>
+                <td class="col-xs-3">@Html.DisplayFor(modelItem => item.BirthDay)</td>
+                <td class="col-xs-1"></td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
+        $("tbody tr").click(function (e) { window.location.href = $(this).attr("href"); });
         //////////////////////////////////////////////////////////////
         // MouseWhell handling
         //////////////////////////////////////////////////////////////

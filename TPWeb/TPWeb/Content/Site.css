@@ -113,6 +113,15 @@ Small_CMD_Icon {
     padding: 10px;
 }
 
+.BigPoster {
+    max-width: 230px;
+    width: 150%;
+    object-fit: cover;
+    object-position: center;
+    margin-left: 0;
+    padding: 0;
+}
+
 select {
     width: 100%;
 }

@@ -5,40 +5,46 @@
 }
 
 <div>
-    <h4>Acteur</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-2">
-            <img src="@Url.Content(Model.GetAvatarURL())" class="BigAvatar" />
-        </div>
-        <div class="col-md-7">
-            <dl class="dl-horizontal">
-                <dt>@Html.DisplayNameFor(model => model.name)</dt>
-                <dd>@Html.DisplayFor(model => model.name)</dd>
+    <h3>
+        @ViewBag.Title &nbsp;&nbsp;
+    <a href="@Url.Action("Edit", new { id = Model.id })" style="text-decoration:none">
+        <span title="Éditer" class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+    </a>
+    <a href="@Url.Action("Delete", new { id = Model.id })" style="text-decoration:none" class="confirm" message="Voulez-vous vraiment effacer @Model.name?">
+        <span title="Supprimer" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    </a>
+    <a href="@Url.Action("Index")" style="text-decoration:none">
+        <span title="Retour" class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+    </a>
+</h3>
+<hr />
+<div>
+    <h3>@Html.DisplayFor(model => model.name)</h3>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <img src="@Url.Content(Model.GetAvatarURL())" class="BigPoster" />
+    </div>
+    <div class="col-md-8">
+        <dl class="dl-horizontal details">
+            <dt>@Html.DisplayNameFor(model => model.BirthDay)</dt>
+            <dd>@Html.DisplayFor(model => model.BirthDay)</dd>
 
-                <dt>@Html.DisplayNameFor(model => model.country)</dt>
-                <dd>@Html.DisplayFor(model => model.country)</dd>
+            <dt>@Html.DisplayNameFor(model => model.country)</dt>
+            <dd>@Html.DisplayFor(model => model.country)</dd>
 
-                <dt>@Html.DisplayNameFor(model => model.BirthDay)</dt>
-                <dd>@Html.DisplayFor(model => model.BirthDay)</dd>
-
-            </dl>
-       </div>
-            <div class="col-md-3" style="font-size:large;">
-                <h3 style="margin-top:0px;">Liste de films</h3>
-                <select multiple="multiple" id="ParutionsList" size="7">
+            <dt>Filmographie</dt>
+            <dd>
+                <div style="height:260px; overflow-y:auto; overflow-x:hidden;">
                     @foreach (TPWeb.Models.Movie Movie in ViewBag.ParutionsList)
                     {
-                        <option value="@Movie.id">
-                            @Movie.title
-                        </option>
+                        <a href="@Url.Action("Details/" + Movie.id.ToString(), "Movies", null, "http")" style="text-decoration:none" data-toggle="tooltip" data-placement="right" title="Voir les détails de @Html.DisplayFor(model => Movie.title)">
+                            <h4><img src="@Url.Content(Movie.GetPosterURL())" class="SmallAvatar"> @Html.DisplayFor(model => Movie.title)</h4>
+                        </a>
                     }
-                </select>
-            </div>
-        </div>
-
-        <p>
-            @Html.ActionLink("Modifier", "Edit", new { id = Model.id }) |
-            @Html.ActionLink("Retour", "Index")
-        </p>
+                </div>
+            </dd>
+        </dl>
+    </div>
+</div>
 </div>

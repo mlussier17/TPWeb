@@ -22,7 +22,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class ="@(ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Movies" ? "active" : "")">@Html.ActionLink("Film", "Index", "Movies")</li>
+                    <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Movies" ? "active" : "")">@Html.ActionLink("Films", "Index", "Movies")</li>
                     <li class="@(ViewContext.RouteData.Values["controller"].ToString() == "Actors" ? "active" : "")">@Html.ActionLink("Acteurs", "Index", "Actors")</li>
                     <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "About" ? "active" : "")">@Html.ActionLink("À propos", "Index", "Home/About")</li>
                     <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "active" : "")">@Html.ActionLink("Contact", "Index", "Home/Contact")</li>

@@ -11,6 +11,17 @@ namespace TPWeb.Controllers
 {
     public class MoviesController : Controller
     {
+        public IEnumerable<SelectListItem> GetStyles()
+        {
+            MovieStyles cts = (MovieStyles)HttpRuntime.Cache["MovieStyles"];
+            var allFlavors = cts.ToList().Select(f => new SelectListItem
+            {
+                Value = f.Id.ToString(),
+                Text = f.Name
+            });
+            return allFlavors;
+        }
+
         public IEnumerable<SelectListItem> GetCountries()
         {
             Countries cts = (Countries)HttpRuntime.Cache["Countries"];
@@ -51,7 +62,7 @@ namespace TPWeb.Controllers
             ViewBag.Actors = ((ActorsView)Session["ActorsView"]).ToList();
             ViewBag.CountryList = GetCountries();
             ViewBag.YearList = GetYears();
-            
+            ViewBag.StyleList = GetStyles();
 
             // Create a new instance of contact and pass it to this action view
             Movie movie = new Movie();
@@ -116,6 +127,7 @@ namespace TPWeb.Controllers
 
                     ViewBag.CountryList = GetCountries();
                     ViewBag.YearList = GetYears();
+                    ViewBag.StyleList = GetStyles();
 
                     // Pass the contact to edit reference to this action view
                     return View(movieToEdit);

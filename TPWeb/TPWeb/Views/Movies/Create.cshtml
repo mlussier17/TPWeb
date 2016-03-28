@@ -4,7 +4,7 @@
     ViewBag.Title = "Nouveau film";
 }
 
-@using (Html.BeginForm("Create", "Actors", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -46,6 +46,13 @@
                 </div>
 
                 <div class="form-group">
+                    @Html.LabelFor(model => model.categorie, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.categorieID, (IEnumerable<SelectListItem>)ViewBag.StyleList, new { @class = "form-control valid" })
+                    </div>
+                </div>
+
+                <div class="form-group">
                     @Html.LabelFor(model => model.country, new { @class = "control-label col-md-3" })
                     <div class="col-md-6">
                         @Html.DropDownListFor(model => model.countryID, (IEnumerable<SelectListItem>)ViewBag.CountryList, new { @class = "form-control valid" })
@@ -74,10 +81,10 @@
                 <div class="col-xs-5 tightDivRight">
                     <!-- NC -->
                     <select multiple="multiple" id="PoolList" size="12">
-                        @foreach (TPWeb.Models.Movie Movie in ViewBag.Movies)
+                        @foreach (TPWeb.Models.Actor Actor in ViewBag.Actors)
                         {
-                            <option value="@Movie.id">
-                                @Movie.title
+                            <option value="@Actor.id">
+                                @Actor.name
                             </option>
                         }
                     </select>
@@ -85,7 +92,7 @@
             </div>
         </div>
         <div class="main col-md-6">
-            <input id="UploadButton" class="btn btn-primary" type="button" value="Choisir une photo...">
+            <input id="UploadButton" class="btn btn-primary" type="button" value="Choisir une affiche...">
             <hr>
             <div class="row">
                 <div class="col-md-offset-3 col-md-9">
@@ -97,14 +104,21 @@
             </div>
         </div>
         <div class="main col-md-5">
-            <input type="submit" id="save" class="btn btn-success" value="Soumettre...">
+            <h3 style="height:34px;">Synopsis</h3>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.synopsis, new { @class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.synopsis, "", new { @class = "text-danger" })
+                    <br>
+                </div>
+                <div class="col-md-9">
+                    <input type="submit" value="Soumettre..." class="btn btn-default" id="save" />
+                </div>
+            </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Retour", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

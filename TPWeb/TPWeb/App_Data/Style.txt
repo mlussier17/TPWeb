@@ -1,0 +1,22 @@
+﻿1|Action
+2|Animation
+3|Arts martiaux
+4|Aventure
+5|Biographique
+6|Catastrophe
+7|Comédie
+8|Documentaire
+9|Drame
+10|Espionnage
+11|Érotique
+12|Fantastique
+13|Guerre
+14|Historique
+15|Horreur
+16|Musical
+17|Policier
+18|Pornographique
+19|Science-fiction
+20|Romantique
+21|Thriller
+22|Western

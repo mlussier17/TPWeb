@@ -19,6 +19,7 @@ namespace TPWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             HttpRuntime.Cache["Actors"] = new Actors(Server.MapPath(@"~/App_Data/Actors.txt"));
             HttpRuntime.Cache["Movies"] = new Movies(Server.MapPath(@"~/App_Data/Movies.txt"));
+            HttpRuntime.Cache["MovieStyles"] = new MovieStyles(Server.MapPath(@"~/App_Data/Style.txt"));
             HttpRuntime.Cache["Parutions"] = new Parutions(Server.MapPath(@"~/App_Data/Parutions.txt"));
         }
         protected void Session_Start()

@@ -121,6 +121,7 @@
     <Compile Include="Models\Actors.cs" />
     <Compile Include="Models\ImageGUIDReference.cs" />
     <Compile Include="Models\Movies.cs" />
+    <Compile Include="Models\MovieStyle.cs" />
     <Compile Include="Models\Parution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -128,6 +129,7 @@
     <Content Include="App_Data\Actors.txt" />
     <Content Include="App_Data\Movies.txt" />
     <Content Include="App_Data\Parutions.txt" />
+    <Content Include="App_Data\Style.txt" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
     <Content Include="Content\bootstrap-datepicker.standalone.css" />

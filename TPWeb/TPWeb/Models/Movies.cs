@@ -19,15 +19,16 @@ namespace TPWeb.Models
         [StringLength(50), Required]
         public String title { get; set; }
 
-        [Display(Name = "Description")]
+        [Display(Name = "Synopsis")]
         [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9 àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
         [StringLength(1024), Required]
-        public String description { get; set; }
+        public String synopsis { get; set; }
 
         [Display(Name = "Pays")]
         [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9 àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
         [StringLength(50), Required]
         public String country { get; set; }
+        private int contryId;
 
         [Display(Name = "Année")]
         public int year { get; set; }
@@ -59,7 +60,7 @@ namespace TPWeb.Models
             Movie clone = new Movie();
             clone.id = this.id;
             clone.title = this.title;
-            clone.description = this.description;
+            clone.synopsis = this.synopsis;
             clone.country = this.country;
             clone.year = this.year;
             clone.categorie = this.categorie;
@@ -77,7 +78,7 @@ namespace TPWeb.Models
 
             movie.id = int.Parse(tokens[0]);
             movie.title = tokens[1];
-            movie.description = tokens[2];
+            movie.synopsis = tokens[2];
             movie.country = tokens[3];
             movie.year = int.Parse(tokens[4]);
             movie.categorie = tokens[5];
@@ -90,7 +91,7 @@ namespace TPWeb.Models
         {
             return id.ToString() + SEPARATOR +
                    title + SEPARATOR +
-                   description + SEPARATOR +
+                   synopsis + SEPARATOR +
                    country + SEPARATOR +
                    year + SEPARATOR +
                    categorie + SEPARATOR +
@@ -265,6 +266,8 @@ namespace TPWeb.Models
             }
             if (index > -1)
             {
+                Parutions currentParution = (Parutions)HttpRuntime.Cache["Parutions"];
+                currentParution.DeleteMovie(List[index].id);
                 List[index].RemovePoster();
                 List.RemoveAt(index);
                 Save();
@@ -283,7 +286,7 @@ namespace TPWeb.Models
             {
                 List[index].title = movie.title;
                 List[index].country = movie.country;
-                List[index].description = movie.description;
+                List[index].synopsis = movie.synopsis;
                 List[index].year = movie.year;
                 if (movie.poster != null) List[index].poster = movie.poster;
                 List[index].categorie = movie.categorie;
@@ -352,9 +355,9 @@ namespace TPWeb.Models
 
                 case "description":
                     if (ascending)
-                        return string.Compare(x.description, y.description);
+                        return string.Compare(x.synopsis, y.synopsis);
                     else
-                        return string.Compare(y.description, x.description);
+                        return string.Compare(y.synopsis, x.synopsis);
 
                 case "country":
                     if (ascending)

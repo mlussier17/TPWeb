@@ -50,7 +50,7 @@ namespace TPWeb.Controllers
                 {
                     if (!String.IsNullOrEmpty(movieId))
                     {
-                        parutions.Add(new Parution(newActorId, int.Parse(movieId)));
+                        parutions.Add(new Parution(int.Parse(movieId), newActorId));
                     }
                 }
 
@@ -118,7 +118,7 @@ namespace TPWeb.Controllers
             {
                 if (!String.IsNullOrEmpty(movieId))
                 {
-                    Parutions.Add(new Parution(actor.id, int.Parse(movieId)));
+                    Parutions.Add(new Parution(int.Parse(movieId), actor.id));
                 }
             }
             // Return the Index action of this controller

@@ -20,11 +20,11 @@ namespace TPWeb.Models
             ActorId = 0;
         }
 
-        public Parution(int ContactId, int FriendId)
+        public Parution(int MovieId_, int ActorId_)
         {
             Id = 0;
-            this.MovieId = ContactId;
-            this.ActorId = FriendId;
+            this.MovieId = MovieId_;
+            this.ActorId = ActorId_;
         }
 
         public Parution Clone()

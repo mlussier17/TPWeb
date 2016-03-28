@@ -150,7 +150,7 @@
     <Content Include="Images\Icons\Modify.png" />
     <Content Include="Images\Icons\Moveleft.png" />
     <Content Include="Images\Icons\MoveRight.png" />
-    <Content Include="Images\Pictures\Default.png" />
+    <Content Include="Images\Pictures\Anonymous.png" />
     <Content Include="Images\Posters\DefaultPoster.jpg" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />

@@ -33,7 +33,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.country, new { @class = "control-label col-md-3" })
                     <div class="col-md-6">
-                        @Html.DropDownListFor(model => model.country, (IEnumerable<SelectListItem>)ViewBag.CountryList)
+                        @Html.DropDownListFor(model => model.country, (IEnumerable<SelectListItem>)ViewBag.CountryList, new { @class = "form-control valid" })
                     </div>
                 </div>
 

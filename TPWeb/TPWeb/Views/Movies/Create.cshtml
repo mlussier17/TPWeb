@@ -4,111 +4,102 @@
     ViewBag.Title = "Nouveau film";
 }
 
-<h2>Nouveau film</h2>
-
-@using (Html.BeginForm("Create", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "Actors", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Film</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="main col-md-6">
+            <div class="form-horizontal">
+                <h3>
+                    Creation d'acteur&nbsp;&nbsp;
+                    <a href="@Url.Action("Details", new { id = Model.id })" style="text-decoration:none">
+                        <span title="Retour" class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </a>
+                </h3>
+                <hr>
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.id)
+                @Html.HiddenFor(model => model.poster)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.title, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.title, new { @class = "form-control text-box single-line" })
+                        @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.description, new {  cols = "20", rows = "8", @class = "form-control"})
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.directors, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.directors, new { @class = "form-control text-box single-line" })
+                        @Html.ValidationMessageFor(model => model.directors, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.country, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.country, (IEnumerable<SelectListItem>)ViewBag.CountryList)
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.year, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.year, (IEnumerable<SelectListItem>)ViewBag.YearList, DateTime.Now.Year.ToString(), new { @class = "form-control valid" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.year, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.year, new SelectList(Enumerable.Range(DateTime.Now.Year - 86, DateTime.Now.Year - 1920), DateTime.Now.Year), new { @class = "form-control" })
-            </div>
-       </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.categorie, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.categorie, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.categorie, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.country, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.countryID, (IEnumerable<SelectListItem>)ViewBag.CountryList, new { @class = "form-control valid" })
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.directors, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.directors, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.directors, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.poster, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <img id="UploadedImage" class="UploadedImage" src="@Url.Content(Model.GetPosterURL())" />
-                    <input id="ImageUploader" name="ImageUploader" type="file" /> <br />
-                    <input id="UploadButton" class="btn btn-primary" type="button" value="Choisir une affiche..." />
-                </div>
-            </div>
-
-            <div class="main col-md-6">
-                <h4>Liste des acteurs</h4>
-                <hr />
-                <div class="row">
-                    <div class="col-xs-5">
-                        <!--
+        </div>
+        <div class="main col-md-5">
+            <h3>Casting</h3>
+            <hr>
+            <div class="row">
+                <div class="col-xs-5 tightDivLeft">
+                    <!--
                         This hidden input is used to pass the selected friend Ids
                         on the submit event of this form (refer to javascript code in utilies.js)
                     -->
-                        <!-- NC -->
-                        <input name="Items" id="Items" type="hidden" value="" />
-                        <!-- NC -->
-                        <select multiple="multiple" id="ItemList" size="12"></select>
-                    </div>
-                    <div class="col-xs-2" style="text-align:center">
-                        <img src="~/Images/Icons/Moveleft.png" class="CMD_Icon pointer" id="MoveLeft" />
-                        <img src="~/Images/Icons/MoveRight.png" class="CMD_Icon pointer" id="MoveRight" />
-                    </div>
-                    <div class="col-xs-5">
-                        <!-- NC -->
-                        <select multiple="multiple" id="PoolList" size="12">
-                            @foreach (TPWeb.Models.Actor Actor in ViewBag.Actors)
-                        {
-                                <option value="@Actor.id">
-                                    @Actor.name
-                                </option>
-                        }
-                        </select>
-                    </div>
+                    <!-- NC -->
+                    <input name="Items" id="Items" type="hidden" value="" />
+                    <!-- NC -->
+                    <select multiple="multiple" id="ItemList" size="12"></select>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <!-- NC il faut id="save" -->
-                    <input type="submit" value="Create" class="btn btn-default" id="save" />
+                <div class="col-xs-2 tightDiv" style="text-align:center">
+                    <img src="~/Images/Icons/Moveleft.png" class="CMD_Icon pointer" id="MoveLeft" />
+                    <img src="~/Images/Icons/MoveRight.png" class="CMD_Icon pointer" id="MoveRight" />
+                </div>
+                <div class="col-xs-5 tightDivRight">
+                    <!-- NC -->
+                    <select multiple="multiple" id="PoolList" size="12">
+                        @foreach (TPWeb.Models.Movie Movie in ViewBag.Movies)
+                        {
+                            <option value="@Movie.id">
+                                @Movie.title
+                            </option>
+                        }
+                    </select>
                 </div>
             </div>
         </div>
-    
+        <div class="main col-md-6">
+            <input id="UploadButton" class="btn btn-primary" type="button" value="Choisir une photo...">
+            <hr>
+            <div class="row">
+                <div class="col-md-offset-3 col-md-9">
+                    <div class="col-md-6">
+                        <img id="UploadedImage" class="UploadedImage" src="@Url.Content(Model.GetPosterURL())" />
+                        <input id="ImageUploader" name="ImageUploader" type="file"> <br> <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main col-md-5">
+            <input type="submit" id="save" class="btn btn-success" value="Soumettre...">
+        </div>
+    </div>
 }
 
 <div>

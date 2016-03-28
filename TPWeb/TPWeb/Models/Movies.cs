@@ -90,7 +90,7 @@ namespace TPWeb.Models
         [Display(Name = "Affiche")]
         public String poster { get; set; }
 
-        [Display(Name = "Realisateur")]
+        [Display(Name = "Directeur")]
         [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9 àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
         [StringLength(100), Required]
         public String directors { get; set; }

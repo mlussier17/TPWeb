@@ -13,19 +13,28 @@ namespace TPWeb.Controllers
     {
         public IEnumerable<SelectListItem> GetCountries()
         {
-            RegionInfo country = new RegionInfo(new CultureInfo("en-US", false).LCID);
-            List<SelectListItem> countryNames = new List<SelectListItem>();
-
-            //To get the Country Names from the CultureInfo installed in windows
-            foreach (CultureInfo cul in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
+            Countries cts = (Countries)HttpRuntime.Cache["Countries"];
+            var allFlavors = cts.ToList().Select(f => new SelectListItem
             {
-                country = new RegionInfo(new CultureInfo(cul.Name, false).LCID);
-                countryNames.Add(new SelectListItem() { Text = country.DisplayName, Value = country.DisplayName });
-            }
+                Value = f.Id.ToString(),
+                Text = f.Name
+            });
+            return allFlavors;
+        }
 
-            //Assigning all Country names to IEnumerable
-            IEnumerable<SelectListItem> nameAdded = countryNames.GroupBy(x => x.Text).Select(x => x.FirstOrDefault()).ToList<SelectListItem>().OrderBy(x => x.Text);
-            return nameAdded;
+        public IEnumerable<SelectListItem> GetYears()
+        {
+            List<String> listyear = new List<String>();
+            int minyear = 1930;
+
+            for (int i = minyear; i <= DateTime.Now.Year; i++) listyear.Add(i.ToString());
+
+            var allFlavors = listyear.Select(f => new SelectListItem
+            {
+                Value = f,
+                Text = f
+            });
+            return allFlavors;
         }
         //
         // GET: /Movies/
@@ -41,6 +50,8 @@ namespace TPWeb.Controllers
             ViewBag.Movies = ((MoviesView)Session["MoviesView"]).ToList();
             ViewBag.Actors = ((ActorsView)Session["ActorsView"]).ToList();
             ViewBag.CountryList = GetCountries();
+            ViewBag.YearList = GetYears();
+            
 
             // Create a new instance of contact and pass it to this action view
             Movie movie = new Movie();
@@ -104,6 +115,7 @@ namespace TPWeb.Controllers
                     ViewBag.NotYetActorsList = movieToEdit.GetNotYetActorsList(Parutions, ActorsView);
 
                     ViewBag.CountryList = GetCountries();
+                    ViewBag.YearList = GetYears();
 
                     // Pass the contact to edit reference to this action view
                     return View(movieToEdit);

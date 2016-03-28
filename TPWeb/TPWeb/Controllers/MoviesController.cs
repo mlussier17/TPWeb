@@ -35,15 +35,15 @@ namespace TPWeb.Controllers
 
         public IEnumerable<SelectListItem> GetYears()
         {
-            List<String> listyear = new List<String>();
+            List<int> listyear = new List<int>();
             int minyear = 1930;
 
-            for (int i = minyear; i <= DateTime.Now.Year + 5; i++) listyear.Add(i.ToString());
+            for (int i = minyear; i <= DateTime.Now.Year + 5; i++) listyear.Add(i);
 
             var allFlavors = listyear.Select(f => new SelectListItem
             {
-                Value = f,
-                Text = f
+                Value = f.ToString(),
+                Text = f.ToString()
             });
             return allFlavors;
         }
@@ -66,6 +66,7 @@ namespace TPWeb.Controllers
 
             // Create a new instance of contact and pass it to this action view
             Movie movie = new Movie();
+            movie.year = 2016;
             return View(movie);
         }
 

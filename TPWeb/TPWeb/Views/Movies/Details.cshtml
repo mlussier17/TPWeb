@@ -47,7 +47,7 @@
                     <div style="height:260px; overflow-y:auto; overflow-x:hidden;">
                         @foreach (TPWeb.Models.Actor Actor in ViewBag.ParutionsList)
                         {
-                            <a href="@Url.Action("Details/" + Actor.id.ToString(), "Movies", null, "http")" style="text-decoration:none" data-toggle="tooltip" data-placement="right" title="Voir les détails de @Html.DisplayFor(model => Actor.name)">
+                            <a href="@Url.Action("Details/" + Actor.id.ToString(), "Actors", null, "http")" style="text-decoration:none" data-toggle="tooltip" data-placement="right" title="Voir les détails de @Html.DisplayFor(model => Actor.name)">
                                 <h4><img src="@Url.Content(Actor.GetAvatarURL())" class="SmallAvatar"> @Html.DisplayFor(model => Actor.name)</h4>
                             </a>
                         }

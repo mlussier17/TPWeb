@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +11,22 @@ namespace TPWeb.Controllers
 {
     public class MoviesController : Controller
     {
+        public IEnumerable<SelectListItem> GetCountries()
+        {
+            RegionInfo country = new RegionInfo(new CultureInfo("en-US", false).LCID);
+            List<SelectListItem> countryNames = new List<SelectListItem>();
+
+            //To get the Country Names from the CultureInfo installed in windows
+            foreach (CultureInfo cul in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
+            {
+                country = new RegionInfo(new CultureInfo(cul.Name, false).LCID);
+                countryNames.Add(new SelectListItem() { Text = country.DisplayName, Value = country.DisplayName });
+            }
+
+            //Assigning all Country names to IEnumerable
+            IEnumerable<SelectListItem> nameAdded = countryNames.GroupBy(x => x.Text).Select(x => x.FirstOrDefault()).ToList<SelectListItem>().OrderBy(x => x.Text);
+            return nameAdded;
+        }
         //
         // GET: /Movies/
         public ActionResult Index()
@@ -23,6 +40,7 @@ namespace TPWeb.Controllers
         {
             ViewBag.Movies = ((MoviesView)Session["MoviesView"]).ToList();
             ViewBag.Actors = ((ActorsView)Session["ActorsView"]).ToList();
+            ViewBag.CountryList = GetCountries();
 
             // Create a new instance of contact and pass it to this action view
             Movie movie = new Movie();
@@ -84,6 +102,8 @@ namespace TPWeb.Controllers
 
                     // Store in ViewBag the "not yet friend" contact list  of the contact to edit
                     ViewBag.NotYetActorsList = movieToEdit.GetNotYetActorsList(Parutions, ActorsView);
+
+                    ViewBag.CountryList = GetCountries();
 
                     // Pass the contact to edit reference to this action view
                     return View(movieToEdit);

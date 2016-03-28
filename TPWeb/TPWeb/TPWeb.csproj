@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Actors.txt" />
+    <Content Include="App_Data\Genre.txt" />
     <Content Include="App_Data\Movies.txt" />
     <Content Include="App_Data\Parutions.txt" />
     <Content Include="Content\bootstrap-datepicker.css" />

@@ -15,6 +15,8 @@ namespace TPWeb.Models
         #region Variables
         private const char SEPARATOR = '|';
 
+        private int countryid;
+
         public int id { get; set; }
 
         [Display(Name = "Nom")]
@@ -23,7 +25,33 @@ namespace TPWeb.Models
         public String name { get; set; }
 
         [Display(Name = "Pays")]
-        public String country { get; set; }
+        public String country 
+        { 
+            get 
+            {
+                Countries cts = (Countries)HttpRuntime.Cache["Countries"];
+                return cts.GetName(countryid);
+            }
+            set
+            {
+                Countries cts = (Countries)HttpRuntime.Cache["Countries"];
+                countryid = cts.GetId(value);
+            }
+        }
+
+
+        [Display(Name = "Pays")]
+        public int countryID
+        {
+            get
+            {
+                return countryid;
+            }
+            set
+            {
+                countryid = value;
+            }
+        }
 
         [Display(Name = "Naissance")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -84,7 +112,7 @@ namespace TPWeb.Models
         {
             return id.ToString() + SEPARATOR +
                    name + SEPARATOR +
-                   country + SEPARATOR +
+                   countryid + SEPARATOR +
                    BirthDay + SEPARATOR +
                    pictureId + SEPARATOR;
         }

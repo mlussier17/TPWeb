@@ -14,6 +14,8 @@ namespace TPWeb.Models
         private const char SEPARATOR = '|';
 
         public int id { get; set; }
+        private int countryid;
+        private int categorieid;
 
         [Display(Name = "Titre")]
         [StringLength(50), Required]
@@ -25,16 +27,65 @@ namespace TPWeb.Models
         public String synopsis { get; set; }
 
         [Display(Name = "Pays")]
-        public String country { get; set; }
-        private int contryId;
+        public String country
+        {
+            get
+            {
+                Countries cts = (Countries)HttpRuntime.Cache["Countries"];
+                return cts.GetName(countryid);
+            }
+            set
+            {
+                Countries cts = (Countries)HttpRuntime.Cache["Countries"];
+                countryid = cts.GetId(value);
+            }
+        }
+
+
+        [Display(Name = "Pays")]
+        public int countryID
+        {
+            get
+            {
+                return countryid;
+            }
+            set
+            {
+                countryid = value;
+            }
+        }
 
         [Display(Name = "Année")]
         public int year { get; set; }
 
-        [Display(Name = "Catégorie")]
-        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9 àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
-        [StringLength(50), Required]
-        public String categorie { get; set; }
+        [Display(Name = "Genre")]
+        public String categorie
+        {
+            get
+            {
+                MovieStyles cts = (MovieStyles)HttpRuntime.Cache["MovieStyles"];
+                return cts.GetName(categorieid);
+            }
+            set
+            {
+                MovieStyles cts = (MovieStyles)HttpRuntime.Cache["MovieStyles"];
+                countryid = cts.GetId(value);
+            }
+        }
+
+
+        [Display(Name = "Genre")]
+        public int categorieID
+        {
+            get
+            {
+                return categorieid;
+            }
+            set
+            {
+                categorieid = value;
+            }
+        }
 
         [Display(Name = "Affiche")]
         public String poster { get; set; }
@@ -77,9 +128,9 @@ namespace TPWeb.Models
             movie.id = int.Parse(tokens[0]);
             movie.title = tokens[1];
             movie.synopsis = tokens[2];
-            movie.country = tokens[3];
+            movie.countryid = int.Parse(tokens[3]);
             movie.year = int.Parse(tokens[4]);
-            movie.categorie = tokens[5];
+            movie.categorieid = int.Parse(tokens[5]);
             movie.poster = tokens[6];
             movie.directors = tokens[7];
             return movie;
@@ -90,9 +141,9 @@ namespace TPWeb.Models
             return id.ToString() + SEPARATOR +
                    title + SEPARATOR +
                    synopsis + SEPARATOR +
-                   country + SEPARATOR +
+                   countryid + SEPARATOR +
                    year + SEPARATOR +
-                   categorie + SEPARATOR +
+                   categorieid + SEPARATOR +
                    poster + SEPARATOR +
                    directors + SEPARATOR;
         }

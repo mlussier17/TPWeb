@@ -90,7 +90,7 @@ namespace TPWeb.Models
 
             actor.id = int.Parse(tokens[0]);
             actor.name = tokens[1];
-            actor.country = tokens[2];
+            actor.countryid = int.Parse(tokens[2]);
             if (!String.IsNullOrEmpty(tokens[3]))
                 try
                 {
@@ -377,6 +377,8 @@ namespace TPWeb.Models
             }
             if (index > -1)
             {
+                Parutions currentParution = (Parutions)HttpRuntime.Cache["Parutions"];
+                currentParution.DeleteActor(List[index].id);
                 List[index].RemovePicture();
                 List.RemoveAt(index);
                 Save();

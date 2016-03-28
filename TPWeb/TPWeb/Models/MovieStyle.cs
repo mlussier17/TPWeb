@@ -45,6 +45,18 @@ namespace TPWeb.Models
         {
             return List;
         }
+        public int GetId(String Name)
+        {
+            for (int i = 0; i < List.Count; i++)
+            {
+                if (List[i].Name == Name)
+                {
+                    return List[i].Id;
+                }
+            }
+            return 0;
+        }
+
         public MovieStyle Get(String Id)
         {
             return Get(int.Parse(Id));

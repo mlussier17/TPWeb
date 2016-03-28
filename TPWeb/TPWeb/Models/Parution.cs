@@ -203,6 +203,27 @@ namespace TPWeb.Models
             UnLock();
         }
 
+        public void DeleteActor(int ActorId)
+        {
+            Lock();
+            int index = -1;
+            do
+            {
+                index = -1;
+                for (int i = 0; i < List.Count; i++)
+                {
+                    if (List[i].ActorId == ActorId)
+                        index = i;
+                }
+                if (index > -1)
+                {
+                    List.RemoveAt(index);
+                    Save();
+                }
+            } while (index != -1);
+            UnLock();
+        }
+
         public Parution Get(int Id)
         {
             Lock();

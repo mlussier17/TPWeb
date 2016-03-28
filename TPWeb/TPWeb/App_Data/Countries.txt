@@ -1,0 +1,248 @@
+﻿1|Afghanistan
+2|Afrique du Sud
+3|Albanie
+4|Algérie
+5|Allemagne
+6|Andorre
+7|Angola
+8|Anguilla
+9|Antarctique
+10|Antigua-et-Barbuda
+11|Antilles néerlandaises
+12|Arabie saoudite
+13|Argentine
+14|Arménie
+15|Aruba
+16|Australie
+17|Autriche
+18|Azerbaïdjan
+19|Bahamas
+20|Bahreïn
+21|Bangladesh
+22|Barbade
+23|Belgique
+24|Belize
+25|Bermudes
+26|Bhoutan
+27|Bolivie
+28|Bosnie-Herzégovine
+29|Botswana
+30|Brunéi Darussalam
+31|Brésil
+32|Bulgarie
+33|Burkina Faso
+34|Burundi
+35|Bélarus
+36|Bénin
+37|Cambodge
+38|Cameroun
+39|Canada
+40|Cap-Vert
+41|Chili
+42|Chine
+43|Chypre
+44|Colombie
+45|Comores
+46|Congo
+47|Corée du Nord
+48|Corée du Sud
+49|Costa Rica
+50|Croatie
+51|Cuba
+52|Côte d’Ivoire
+53|Danemark
+54|Djibouti
+55|Dominique
+56|El Salvador
+57|Espagne
+58|Estonie
+59|Fidji
+60|Finlande
+61|France
+62|Gabon
+63|Gambie
+64|Ghana
+65|Gibraltar
+66|Grenade
+67|Groenland
+68|Grèce
+69|Guadeloupe
+70|Guam
+71|Guatemala
+72|Guernesey
+73|Guinée
+74|Guinée équatoriale
+75|Guinée-Bissau
+76|Guyana
+77|Guyane française
+78|Géorgie
+79|Géorgie du Sud et les îles Sandwich du Sud
+80|Haïti
+81|Honduras
+82|Hongrie
+83|Inde
+84|Indonésie
+85|Irak
+86|Iran
+87|Irlande
+88|Islande
+89|Israël
+90|Italie
+91|Jamaïque
+92|Japon
+93|Jersey
+94|Jordanie
+95|Kazakhstan
+96|Kenya
+97|Kirghizistan
+98|Kiribati
+99|Koweït
+100|Laos
+101|Lesotho
+102|Lettonie
+103|Liban
+104|Libye
+105|Libéria
+106|Liechtenstein
+107|Lituanie
+108|Luxembourg
+109|Macédoine
+110|Madagascar
+111|Malaisie
+112|Malawi
+113|Maldives
+114|Mali
+115|Malte
+116|Maroc
+117|Martinique
+118|Maurice
+119|Mauritanie
+120|Mayotte
+121|Mexique
+122|Moldavie
+123|Monaco
+124|Mongolie
+125|Montserrat
+126|Monténégro
+127|Mozambique
+128|Myanmar
+129|Namibie
+130|Nauru
+131|Nicaragua
+132|Niger
+133|Nigéria
+134|Niue
+135|Norvège
+136|Nouvelle-Calédonie
+137|Nouvelle-Zélande
+138|Népal
+139|Oman
+140|Ouganda
+141|Ouzbékistan
+142|Pakistan
+143|Palaos
+144|Panama
+145|Papouasie-Nouvelle-Guinée
+146|Paraguay
+147|Pays-Bas
+148|Philippines
+149|Pitcairn
+150|Pologne
+151|Polynésie française
+152|Porto Rico
+153|Portugal
+154|Pérou
+155|Qatar
+156|R.A.S. chinoise de Hong Kong
+157|R.A.S. chinoise de Macao
+158|Roumanie
+159|Royaume-Uni
+160|Russie
+161|Rwanda
+162|République centrafricaine
+163|République dominicaine
+164|République démocratique du Congo
+165|République tchèque
+166|Réunion
+167|Sahara occidental
+168|Saint-Barthélémy
+169|Saint-Kitts-et-Nevis
+170|Saint-Marin
+171|Saint-Martin
+172|Saint-Pierre-et-Miquelon
+173|Saint-Vincent-et-les Grenadines
+174|Sainte-Hélène
+175|Sainte-Lucie
+176|Samoa
+177|Samoa américaines
+178|Sao Tomé-et-Principe
+179|Serbie
+180|Serbie-et-Monténégro
+181|Seychelles
+182|Sierra Leone
+183|Singapour
+184|Slovaquie
+185|Slovénie
+186|Somalie
+187|Soudan
+188|Sri Lanka
+189|Suisse
+190|Suriname
+191|Suède
+192|Svalbard et Île Jan Mayen
+193|Swaziland
+194|Syrie
+195|Sénégal
+196|Tadjikistan
+197|Tanzanie
+198|Taïwan
+199|Tchad
+200|Terres australes françaises
+201|Territoire britannique de l'océan Indien
+202|Territoire palestinien
+203|Thaïlande
+204|Timor oriental
+205|Togo
+206|Tokelau
+207|Tonga
+208|Trinité-et-Tobago
+209|Tunisie
+210|Turkménistan
+211|Turquie
+212|Tuvalu
+213|Ukraine
+214|Uruguay
+215|Vanuatu
+216|Venezuela
+217|Viêt Nam
+218|Wallis-et-Futuna
+219|Yémen
+220|Zambie
+221|Zimbabwe
+222|région indéterminée
+223|Égypte
+224|Émirats arabes unis
+225|Équateur
+226|Érythrée
+227|État de la Cité du Vatican
+228|États fédérés de Micronésie
+229|États-Unis
+230|Éthiopie
+231|Île Bouvet
+232|Île Christmas
+233|Île Norfolk
+234|Île de Man
+235|Îles Caïmans
+236|Îles Cocos - Keeling
+237|Îles Cook
+238|Îles Féroé
+239|Îles Heard et MacDonald
+240|Îles Malouines
+241|Îles Mariannes du Nord
+242|Îles Marshall
+243|Îles Mineures Éloignées des États-Unis
+244|Îles Salomon
+245|Îles Turks et Caïques
+246|Îles Vierges britanniques
+247|Îles Vierges des États-Unis
+248|Îles Åland

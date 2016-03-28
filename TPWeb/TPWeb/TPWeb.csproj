@@ -119,6 +119,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Actors.cs" />
+    <Compile Include="Models\Countries.cs" />
     <Compile Include="Models\ImageGUIDReference.cs" />
     <Compile Include="Models\Movies.cs" />
     <Compile Include="Models\MovieStyle.cs" />
@@ -127,7 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Actors.txt" />
-    <Content Include="App_Data\Genre.txt" />
+    <Content Include="App_Data\Countries.txt" />
     <Content Include="App_Data\Movies.txt" />
     <Content Include="App_Data\Parutions.txt" />
     <Content Include="App_Data\Style.txt" />

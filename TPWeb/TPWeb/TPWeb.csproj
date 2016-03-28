@@ -127,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Actors.txt" />
+    <Content Include="App_Data\Genre.txt" />
     <Content Include="App_Data\Movies.txt" />
     <Content Include="App_Data\Parutions.txt" />
     <Content Include="App_Data\Style.txt" />
@@ -152,7 +153,7 @@
     <Content Include="Images\Icons\Modify.png" />
     <Content Include="Images\Icons\Moveleft.png" />
     <Content Include="Images\Icons\MoveRight.png" />
-    <Content Include="Images\Pictures\Default.png" />
+    <Content Include="Images\Pictures\Anonymous.png" />
     <Content Include="Images\Posters\DefaultPoster.jpg" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />

@@ -34,8 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.country, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.country)
-                @Html.ValidationMessageFor(model => model.country)
+                @Html.DropDownListFor(model => model.country, (IEnumerable<SelectListItem>)ViewBag.CountryList)
             </div>
         </div>
 

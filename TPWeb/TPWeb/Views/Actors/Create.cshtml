@@ -12,7 +12,7 @@
         <div class="main col-md-6">
             <div class="form-horizontal">
                 <h3>
-                    Modification d'acteur&nbsp;&nbsp;
+                    Creation d'acteur&nbsp;&nbsp;
                     <a href="@Url.Action("Details", new { id = Model.id })" style="text-decoration:none">
                         <span title="Retour" class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
                     </a>
@@ -33,15 +33,14 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.country, new { @class = "control-label col-md-3" })
                     <div class="col-md-6">
-                        @Html.TextBoxFor(model => model.country, new { @class = "form-control text-box single-line" })
-                        @Html.ValidationMessageFor(model => model.country)
+                        @Html.DropDownListFor(model => model.country, (IEnumerable<SelectListItem>)ViewBag.CountryList)
                     </div>
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.BirthDay, new { @class = "control-label col-md-3" })
                     <div class="col-md-6">
-                        @Html.TextBoxFor(model => model.BirthDay, new { @class = "form-control datepicker text-box single-line valid" })
+                        @Html.TextBoxFor(model => model.BirthDay, "{0:d}", new { @class = "form-control datepicker text-box single-line valid" })
                         @Html.ValidationMessageFor(model => model.BirthDay, "", new { @class = "text-danger" })
                     </div>
                 </div>

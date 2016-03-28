@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Mvc;
 
 namespace TPWeb.Models
 {
@@ -21,8 +23,6 @@ namespace TPWeb.Models
         public String name { get; set; }
 
         [Display(Name = "Pays")]
-        [RegularExpression(@"^((?!^Name$)[-a-zA-ZàâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
-        [StringLength(50), Required]
         public String country { get; set; }
 
         [Display(Name = "Naissance")]
@@ -38,7 +38,7 @@ namespace TPWeb.Models
         #region Construction
         public Actor()
         {
-            defaultPicture = new ImageGUIDReference(@"~/Images/Pictures/", @"Default.png");
+            defaultPicture = new ImageGUIDReference(@"~/Images/Pictures/", @"Anonymous.png");
             BirthDay = DateTime.Now;
         }
         public Actor Clone()

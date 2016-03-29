@@ -8,10 +8,21 @@
         width: 98.5%;
     }
 
+    .table-fixed tr {
+        background-color: #FFF;
+        color: #000;
+    }
+
+        .table-fixed tr:hover td {
+            background-color: lightgray;
+            cursor: pointer;
+        }
+
     .table-fixed tbody { /* set the height of the table body */
-        height: 638px;
+        height: 680px;
         overflow-y: auto;
         width: 100%;
+        min-width: 550px;
     }
 
     .black-BG {
@@ -34,7 +45,7 @@
         }
 
     .table-fixed td { /* set the height of the table rows*/
-        height: 58px;
+        height: 68px;
         background-color: inherit;
         font-weight: 600;
     }
@@ -96,90 +107,48 @@
         float: left;
         width: 12%;
     }
+
+    #addActor {
+        margin-left: 1%;
+    }
 </style>
-<h2>Films</h2>
-<p>
-    <a href="@Url.Action("Create")" style="text-decoration:none">
-        <img src="~/Images/Icons/AddMovie.png" class="CMD_Icon Pointer"
-             data-toggle="tooltip" data-placement="right" title="Nouveau contact"
-             style="margin: auto;" />
+<h3>
+    Gestion des Films
+    <a id="addActor" href="@Url.Action("Create")" style="text-decoration:none">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </a>
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.country)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.year)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.categorie)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.poster)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.directors)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.country)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.year)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.categorie)
-        </td>
-        <td>
-            <img src="@Url.Content(item.GetPosterURL())" class="SmallAvatar" />
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.directors)
-        </td>
-        <td>
-            <a href="@Url.Action("Edit", "Movies", new { id = item.id })" style="text-decoration:none">
-                <img src="~/Images/Icons/Modify.png"
-                     class="CMD_Icon Pointer"
-                     data-toggle="tooltip"
-                     data-placement="right"
-                     title="Modifier @item.title" />
-            </a>
-            <a href="@Url.Action("Details", "Movies", new { id = item.id })" style="text-decoration:none">
-                <img src="~/Images/Icons/Details.png"
-                     class="CMD_Icon Pointer"
-                     data-toggle="tooltip"
-                     data-placement="right"
-                     title="Voir les détails de @item.title" />
-            </a>
-            <a href="@Url.Action("Delete", "Movies", new { id = item.id })" style="text-decoration:none"
-               class="confirm"
-               message="Voulez-vous vraiment effacer @item.title ?">
-                <img src="~/Images/Icons/DeleteMovie.png"
-                     class="CMD_Icon Pointer"
-                     data-toggle="tooltip"
-                     data-placement="right"
-                     title="Effacer @item.title" />
-            </a>
-        </td>
-    </tr>
-}
-
+</h3>
+<table class="table table-fixed black-BG">
+    <thead>
+        <tr>
+            <th class="col-xs-4">@Html.DisplayNameFor(model => model.title)</th>
+            <th class="col-xs-1">@Html.DisplayNameFor(model => model.year)</th>
+            <th class="col-xs-2">@Html.DisplayNameFor(model => model.country)</th>
+            <th class="col-xs-2">@Html.DisplayNameFor(model => model.categorie)</th>
+            <th class="col-xs-2">@Html.DisplayNameFor(model => model.directors)</th>
+        </tr>
+    </thead>
+    <tbody id="table_data_actors" class="table_data save_Actors_scroll">
+        @foreach (var item in Model)
+        {
+            <tr href="/Movies/Details/@Html.DisplayFor(modelItem => item.id)">
+                <td class="col-xs-4">
+                    <img src="@Url.Content(item.GetPosterURL())" class="SmallAvatar" style="float:left;margin-right:5px"/>
+                    <div>@Html.DisplayFor(modelItem => item.title)</div>
+                </td>
+                <td class="col-xs-1">@Html.DisplayFor(modelItem => item.year)</td>
+                <td class="col-xs-2">@Html.DisplayFor(modelItem => item.country)</td>
+                <td class="col-xs-2">@Html.DisplayFor(modelItem => item.categorie)</td>
+                <td class="col-xs-3">@Html.DisplayFor(modelItem => item.directors)</td>
+            </tr>
+        }
+    </tbody>
 </table>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
+        $("tbody tr").click(function (e) { window.location.href = $(this).attr("href"); });
         //////////////////////////////////////////////////////////////
         // MouseWhell handling
         //////////////////////////////////////////////////////////////
@@ -213,27 +182,27 @@
         /////////////////////////////////////////////////////////////////////////////
 
         //// When the document is fully uploaded into the browser...
-        //$(document).ready(function () {
-        //    // Retreive the scroll position
-        //    //////////////////////////////////////////////////////////////////////
-        //    // If scroll AND location cookie are set, and the location is the same
-        //    if ($.cookie("scroll") !== null &&
-        //        $.cookie("location") !== null &&
-        //        $.cookie("location") == $(location).attr('href')) {
-        //        // scroll to the position saved in the scroll cookie
-        //        $("#table_data").scrollTop($.cookie("scroll"));
-        //    }
+        $(document).ready(function () {
+            // Retreive the scroll position
+            //////////////////////////////////////////////////////////////////////
+            // If scroll AND location cookie are set, and the location is the same
+            if ($.cookie("scroll") !== null &&
+                $.cookie("location") !== null &&
+                $.cookie("location") == $(location).attr('href')) {
+                // scroll to the position saved in the scroll cookie
+                $("#table_data").scrollTop($.cookie("scroll"));
+            }
 
-        //    // When a link is clicked...
-        //    $('a').on("click", function () {
-        //        // Save the scroll position
-        //        ////////////////////////////////////////////////////////////////
-        //        // Set a cookie that holds the scroll position
-        //        $.cookie("scroll", $("#table_data").scrollTop());
-        //        // set a cookie that holds the current location
-        //        $.cookie("location", $(location).attr('href'));
-        //    });
-        //});
+            // When a link is clicked...
+            $('a').on("click", function () {
+                // Save the scroll position
+                ////////////////////////////////////////////////////////////////
+                // Set a cookie that holds the scroll position
+                $.cookie("scroll", $("#table_data").scrollTop());
+                // set a cookie that holds the current location
+                $.cookie("location", $(location).attr('href'));
+            });
+        });
         // end of Vertical scroll posision cookie handler
         ///////////////////////////////////////////////////////////////////////////
 

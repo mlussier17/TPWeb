@@ -3,84 +3,75 @@
 @{
     ViewBag.Title = "Edit";
 }
-<h2>Modifier film</h2>
 
 @using (Html.BeginForm("Edit", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Films</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.title, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.title)
-                @Html.ValidationMessageFor(model => model.title)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.synopsis, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.synopsis)
-                @Html.ValidationMessageFor(model => model.synopsis)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.country, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.country, (IEnumerable<SelectListItem>)ViewBag.CountryList)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.year, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.year, new SelectList(Enumerable.Range(DateTime.Now.Year - 86, DateTime.Now.Year - 1920), DateTime.Now.Year), new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.categorie, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.categorie)
-                @Html.ValidationMessageFor(model => model.categorie)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.directors, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.directors)
-                @Html.ValidationMessageFor(model => model.directors)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.poster, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <img id="UploadedImage" class="UploadedImage" src="@Url.Content(Model.GetPosterURL())" />
-                <input id="ImageUploader" name="ImageUploader" type="file" /> <br />
-                <input id="UploadButton" class="btn btn-primary" type="button" value="Choisir une affiche ..." />
-            </div>
-        </div>
-
+    <div class="row">
         <div class="main col-md-6">
-            <h4>Liste des acteurs</h4>
-            <hr />
+            <div class="form-horizontal">
+                <h3>
+                    Creation d'acteur&nbsp;&nbsp;
+                    <a href="@Url.Action("Details", new { id = Model.id })" style="text-decoration:none">
+                        <span title="Retour" class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </a>
+                </h3>
+                <hr>
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.id)
+                @Html.HiddenFor(model => model.poster)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.title, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.title, new { @class = "form-control text-box single-line" })
+                        @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.directors, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.directors, new { @class = "form-control text-box single-line" })
+                        @Html.ValidationMessageFor(model => model.directors, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.year, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.year, (IEnumerable<SelectListItem>)ViewBag.YearList, new { @class = "form-control valid" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.categorie, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.categorieID, (IEnumerable<SelectListItem>)ViewBag.StyleList, new { @class = "form-control valid" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.country, new { @class = "control-label col-md-3" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(model => model.countryID, (IEnumerable<SelectListItem>)ViewBag.CountryList, new { @class = "form-control valid" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main col-md-5">
+            <h3>Casting</h3>
+            <hr>
             <div class="row">
-                <div class="col-xs-5">
+                <div class="col-xs-5 tightDivLeft">
                     <!--
-                    This hidden input is used to pass the selected friend Ids
-                    on the submit event of this form (refer to javascript code in utilies.js)
-                -->
+                        This hidden input is used to pass the selected friend Ids
+                        on the submit event of this form (refer to javascript code in utilies.js)
+                    -->
                     <!-- NC -->
                     <input name="Items" id="Items" type="hidden" value="" />
+                    <!-- NC -->
                     <select multiple="multiple" id="ItemList" size="12">
                         @foreach (TPWeb.Models.Actor Actor in ViewBag.ActorsList)
                         {
@@ -90,11 +81,11 @@
                         }
                     </select>
                 </div>
-                <div class="col-xs-2" style="text-align:center">
+                <div class="col-xs-2 tightDiv" style="text-align:center">
                     <img src="~/Images/Icons/Moveleft.png" class="CMD_Icon pointer" id="MoveLeft" />
                     <img src="~/Images/Icons/MoveRight.png" class="CMD_Icon pointer" id="MoveRight" />
                 </div>
-                <div class="col-xs-5">
+                <div class="col-xs-5 tightDivRight">
                     <!-- NC -->
                     <select multiple="multiple" id="PoolList" size="12">
                         @foreach (TPWeb.Models.Actor Actor in ViewBag.NotYetActorsList)
@@ -107,10 +98,30 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <!-- NC il faut id="save" -->
-                <input type="submit" value="Modifier" class="btn btn-default" id="save" />
+        <div class="main col-md-6">
+            <input id="UploadButton" class="btn btn-primary" type="button" value="Choisir une affiche...">
+            <hr>
+            <div class="row">
+                <div class="col-md-offset-3 col-md-9">
+                    <div class="col-md-6">
+                        <img id="UploadedImage" class="UploadedImage" src="@Url.Content(Model.GetPosterURL())" />
+                        <input id="ImageUploader" name="ImageUploader" type="file"> <br> <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main col-md-5">
+            <h3 style="height:34px;">Synopsis</h3>
+            <hr>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.TextAreaFor(model => model.synopsis, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.synopsis, "", new { @class = "text-danger" })
+                    <br>
+                </div>
+                <div class="col-md-9">
+                    <input type="submit" value="Soumettre..." class="btn btn-success" id="save" />
+                </div>
             </div>
         </div>
     </div>

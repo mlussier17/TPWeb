@@ -216,7 +216,7 @@ namespace TPWeb.Models
                 checkForMore = false;
                 foreach (Parution Parution in ParutionList)
                 {
-                    if (this.id == Parution.ActorId)
+                    if (this.id == Parution.MovieId)
                     {
                         parutions.Delete(Parution.Id);
                         checkForMore = true;

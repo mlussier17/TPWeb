@@ -68,7 +68,7 @@ namespace TPWeb.Models
             set
             {
                 MovieStyles cts = (MovieStyles)HttpRuntime.Cache["MovieStyles"];
-                countryid = cts.GetId(value);
+                categorieid = cts.GetId(value);
             }
         }
 
@@ -333,10 +333,14 @@ namespace TPWeb.Models
             if (index > -1)
             {
                 List[index].title = movie.title;
-                List[index].country = movie.country;
+                List[index].countryID = movie.countryID;
                 List[index].synopsis = movie.synopsis;
                 List[index].year = movie.year;
-                if (movie.poster != null) List[index].poster = movie.poster;
+                if (movie.poster != null)
+                {
+                    if (List[index].poster != movie.poster) List[index].RemovePoster();
+                    List[index].poster = movie.poster;
+                }
                 List[index].categorie = movie.categorie;
                 List[index].directors = movie.directors;
 

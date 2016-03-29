@@ -24,6 +24,15 @@ namespace TPWeb.Controllers
         // GET: /Actors/
         public ActionResult Index()
         {
+            string sortfield = this.Request.QueryString["sortField"];
+
+            if (sortfield != null)
+            {
+                ActorsView av = (ActorsView)Session["ActorsView"];
+                av.Sort(sortfield);
+                return RedirectToAction("Index");
+            }
+
             return View(((ActorsView)Session["ActorsView"]).ToList());
         }
 

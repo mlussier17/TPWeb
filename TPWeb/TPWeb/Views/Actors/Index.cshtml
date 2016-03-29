@@ -120,9 +120,9 @@
     <thead>
         <tr>
             <th class="col-xs-1"></th>
-            <th class="col-xs-4">@Html.DisplayNameFor(model => model.name)</th>
-            <th class="col-xs-3">@Html.DisplayNameFor(model => model.country)</th>
-            <th class="col-xs-3"> @Html.DisplayNameFor(model => model.BirthDay)</th>
+            <th class="col-xs-4"><a href="/Actors?sortField=name" class="sortLink save_Movies_scroll">@Html.DisplayNameFor(model => model.name)<a/></th>
+            <th class="col-xs-3"><a href="/Actors?sortField=country" class="sortLink save_Movies_scroll">@Html.DisplayNameFor(model => model.country)<a /></th>
+            <th class="col-xs-3"><a href="/Actors?sortField=birthday" class="sortLink save_Movies_scroll">@Html.DisplayNameFor(model => model.BirthDay)<a /></th>
             <th class="col-xs-1"></th>
         </tr>
     </thead>

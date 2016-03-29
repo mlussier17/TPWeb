@@ -51,6 +51,15 @@ namespace TPWeb.Controllers
         // GET: /Movies/
         public ActionResult Index()
         {
+            string sortfield = this.Request.QueryString["sortField"];
+
+            if (sortfield != null)
+            {
+                MoviesView mv = (MoviesView)Session["MoviesView"];
+                mv.Sort(sortfield);
+                return RedirectToAction("Index");
+            }
+
             return View(((MoviesView)Session["MoviesView"]).ToList());
         }
 

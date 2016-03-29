@@ -121,11 +121,11 @@
 <table class="table table-fixed black-BG">
     <thead>
         <tr>
-            <th class="col-xs-4">@Html.DisplayNameFor(model => model.title)</th>
-            <th class="col-xs-1">@Html.DisplayNameFor(model => model.year)</th>
-            <th class="col-xs-2">@Html.DisplayNameFor(model => model.country)</th>
-            <th class="col-xs-2">@Html.DisplayNameFor(model => model.categorie)</th>
-            <th class="col-xs-2">@Html.DisplayNameFor(model => model.directors)</th>
+            <th class="col-xs-4"><a href="/Movies?sortField=title" class="sortLink save_Movies_scroll">@Html.DisplayNameFor(model => model.title)</a></th>
+            <th class="col-xs-1"><a href="/Movies?sortField=year" class="sortLink save_Movies_scroll">@Html.DisplayNameFor(model => model.year)</a></th>
+            <th class="col-xs-2"><a href="/Movies?sortField=country" class="sortLink save_Movies_scroll">@Html.DisplayNameFor(model => model.country)</a></th>
+            <th class="col-xs-2"><a href="/Movies?sortField=categorie" class="sortLink save_Movies_scroll">@Html.DisplayNameFor(model => model.categorie)</a></th>
+            <th class="col-xs-2"><a href="/Movies?sortField=directors" class="sortLink save_Movies_scroll">@Html.DisplayNameFor(model => model.directors)</a></th>
         </tr>
     </thead>
     <tbody id="table_data_actors" class="table_data save_Actors_scroll">

@@ -22,7 +22,6 @@ namespace TPWeb.Models
         public String title { get; set; }
 
         [Display(Name = "Synopsis")]
-        [RegularExpression(@"^((?!^Name$)[-a-zA-Z0-9 àâäçèêëéìîïòôöùûüÿñÀÂÄÇÈÊËÉÌÎÏÒÔÖÙÛÜ_'])+$", ErrorMessage = "Caractères illégaux.")]
         [StringLength(1024), Required]
         public String synopsis { get; set; }
 
